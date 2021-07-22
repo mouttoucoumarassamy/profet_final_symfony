@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 
 use App\Repository\LicenceRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FrontLicenceController extends AbstractController

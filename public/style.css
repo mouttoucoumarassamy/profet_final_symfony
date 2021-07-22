@@ -305,7 +305,8 @@ footer{
 }
 
 .pagination {
-    display: inline;
+    display: flex;
+    justify-content: center;
 }
 
 .pagination a {
@@ -320,11 +321,14 @@ footer{
     border-radius: 5px;
 }
 
-.active a{
+.current{
+    margin : auto 2%;
     background-color: darkred;
     color : white;
+    padding: 6% 11%;
+    border : solid 1px indianred;
+    border-radius: 5px;
 }
-
 
 .pagination li{
     list-style: none;

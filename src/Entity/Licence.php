@@ -103,12 +103,12 @@ class Licence
         return $this;
     }
 
-    public function getMedia(): ?Media
+    public function getMedia(): ?string
     {
         return $this->media;
     }
 
-    public function setMedia(?Media $media): self
+    public function setMedia(string $media): self
     {
         $this->media = $media;
 

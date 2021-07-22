@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 
 
 use App\Repository\ProductRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

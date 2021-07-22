@@ -4,7 +4,7 @@
     <div class="container">
         {% for licence in licences %}
             <div class="card br">
-                <img src="{{ asset('img/media/' ~  licence.media.src ) }}" alt="{{ licence.media.alt }}">
+                <img src="{{ asset('img/media/' ~  licence.media ) }}">
                 <h1>
                     <a href="{{ path('front_show_licence', {'id' : licence.id}) }}">{{ licence.name }}</a>
                 </h1>
