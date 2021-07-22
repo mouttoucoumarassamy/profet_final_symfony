@@ -1,0 +1,21 @@
+{% extends 'front/base.html.twig' %}
+
+{% block main %}
+    <div class="container">
+        <img src="{{ asset('img/media/' ~  licence.media.src ) }}" alt="{{ licence.media.alt }}" class="logo">
+        <h1>
+            {{ licence.name }}
+        </h1>
+        <h2>
+            {{ licence.description }}
+        </h2>
+    </div>
+    <div class="container">
+        {% for product  in licence.products %}
+            <div class="card">
+                <a href="{{ path('front_show_product', {'id' : product.id}) }}"><img src="{{ asset('img/media/' ~ product.media[0].src) }}" alt="{{ product.media[0].alt }}" class="w60"></a>
+                <h3><a href="{{ path('front_show_product', {'id' : product.id}) }}">{{ product.name }}</a></h3>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

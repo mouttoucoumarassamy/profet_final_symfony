@@ -1,0 +1,22 @@
+{% extends 'front/base.html.twig' %}
+
+{% block main %}
+
+    <div class="container">
+        {% for categorie in categories %}
+            <div class="card br">
+                <a href="{{ path('front_categorie_show', {'id' : categorie.id}) }}"><img src="{{ asset('img/media/' ~ categorie.media) }}""></a>
+                <h1>
+                    <a href="{{ path('front_categorie_show', {'id' : categorie.id}) }}">{{ categorie.name }}</a>
+                </h1>
+                <h2>
+                    {{ categorie.description }}
+                </h2>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="page">
+        {{ knp_pagination_render(categories) }}
+    </div>
+
+{% endblock %}

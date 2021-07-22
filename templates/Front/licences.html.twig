@@ -1,0 +1,18 @@
+{% extends 'front/base.html.twig' %}
+
+{% block main %}
+    <div class="container">
+        {% for licence in licences %}
+            <div class="card br">
+                <img src="{{ asset('img/media/' ~  licence.media.src ) }}" alt="{{ licence.media.alt }}">
+                <h1>
+                    <a href="{{ path('front_show_licence', {'id' : licence.id}) }}">{{ licence.name }}</a>
+                </h1>
+                <h2>
+                    {{ licence.description }}
+                </h2>
+            </div>
+
+    {% endfor %}
+    </div>
+{% endblock %}

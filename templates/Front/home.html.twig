@@ -1,0 +1,27 @@
+{% extends 'front/base.html.twig' %}
+
+{% block metaTitle %}
+        Accueil du site
+{%  endblock %}
+
+
+{%  block main %}
+    <h1>Bienvenue sur Super Amazon</h1>
+    <h2>Vous trouverez tous sur les super-héros et leurs produits dérivés</h2>
+    <div class="line"></div>
+    <div class="alea">
+        {% for product  in categorie.products | slice(0, 3) %}
+            <div class="col">
+                <a href="{{ path('front_show_product', {'id' : product.id}) }}">
+                    <img src="{{ asset('img/media/' ~ product.media[0].src) }}" alt="{{ product.media[0].alt }}">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="plus">
+        <a href="{{ path('front_list_product') }}">
+            EN SAVOIR PLUS !
+        </a>
+    </div>
+{%  endblock %}
+

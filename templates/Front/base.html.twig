@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
+    {% block link %}{% endblock link %}
+    <title>{% block metaTitle %}{% endblock metaTitle %}</title>
+
+</head>
+<body>
+
+<header >
+    <div class="header">
+        <div class="w20">
+            <a href="{{ path('front_home') }}">
+                Accueil{# <img class="w35" src="{{ asset('') }}"> #}
+            </a>
+        </div>
+        <div class="search">{# path('front_search') #}
+            <form action="{{ path('front_search') }}" class="form" method="get">
+                <input class="input" type="search" placeholder="Rechercher..." name="q">
+                <input type="submit" class="button" value="Rechercher">
+            </form>
+        </div>
+        <div class="w40">
+            <div class="categories">
+                <a href="{{ path('front_categories_list') }}">Catégories</a>
+            </div>
+            <div class="licences">
+                <a href="{{  path('front_list_licence') }}">Licences</a>
+            </div>
+            <div class="login">
+                <a href="">Se connecter</a>{# path('front_login') #}
+            </div>
+            <div class="basket">
+                <a href="#"><img src="{{ asset('img/logo/panier.png') }}" alt="panier" class="cart"></a>{# path('front_basket') #}
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="main">
+    {% block main %}
+    {% endblock main %}
+</main>
+
+<footer >
+    <div class="footer">
+        <div class="info">
+            <ul>
+                <li class="about">
+                    <a href="#">Informations</a>
+                </li>
+                <li>
+                    <a href="#">Carrières</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <div class="up">
+            <a href="#top">Retour en haut</a>
+        </div>
+        <div class="social">
+            <ul>
+                <li><a href="https://fr-fr.facebook.com/"><img class="facebook" src="{{ asset('img/logo/facebook.png') }}" alt="facebook"></a></li>
+                <li><a href="https://www.youtube.com/"><img src="{{ asset('img/logo/youtube.png') }}" alt="youtube"></a></li>
+                <li><a href="https://twitter.com/?lang=fr"><img src="{{ asset('img/logo/twitter.png') }}" alt="twitter"></a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+{% block script %}
+{% endblock %}
+</body>
+</html>
