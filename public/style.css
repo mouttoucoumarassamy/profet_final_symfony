@@ -446,6 +446,30 @@ footer{
     height: 3.5vh;
 }
 
+.delete{
+    background-color: darkred;
+    color:white;
+    border: 5px darkred solid;
+    border-radius: 20px;
+    display: block;
+    width: 25%;
+    margin: 1% auto;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.update{
+    background-color: darkgreen;
+    color:white;
+    border: 5px darkgreen solid;
+    border-radius: 20px;
+    display: block;
+    width: 25%;
+    margin: 1% auto;
+    text-align: center;
+    font-size: 1.2em;
+}
+
 
 
 
