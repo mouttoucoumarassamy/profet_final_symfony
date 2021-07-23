@@ -18,7 +18,7 @@
                 Accueil{# <img class="w35" src="{{ asset('') }}"> #}
             </a>
         </div>
-        <div class="search">{# path('front_search') #}
+        <div class="search">
             <form action="{{ path('front_search') }}" class="form" method="get">
                 <input class="input" type="search" placeholder="Rechercher..." name="q">
                 <input type="submit" class="button" value="Rechercher">
@@ -26,25 +26,13 @@
         </div>
         <div class="w40">
             <div class="categories">
-                <a href="{{ path('front_categories_list') }}">Catégories</a>
+                <a href="{{ path('admin_categories_list') }}">Catégories</a>
             </div>
             <div class="licences">
-                <a href="{{  path('front_list_licence') }}">Licences</a>
+                <a href="{{  path('admin_list_licence') }}">Licences</a>
             </div>
-            <div class="log">
-                <a href="{{ path('app_login') }}">{% if app.user %}
-                    {{ app.user.firstname }} {{ app.user.name  }}
-                        {% if app.user.media.id %}
-                            <img src="{{ asset('img/media/' ~ app.user.media.src) }}" class="w10">
-                        {% endif %}
-                    {% endif %}
-                    {% if app.user is null %}
-                        Se connecter/S'inscrire
-                    {% endif %}
-                </a>
-            </div>
-            <div class="basket">
-                <a href="#"><img src="{{ asset('img/logo/panier.png') }}" alt="panier" class="cart"></a>{# path('front_basket') #}
+            <div class="login">
+                <a href="{{ path('app_login') }}">Se connecter</a>
             </div>
         </div>
     </div>

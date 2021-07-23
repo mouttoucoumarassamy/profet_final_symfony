@@ -1,0 +1,67 @@
+{% extends 'front/base.html.twig' %}
+
+{% block link %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block main %}
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+
+                    <div class="mb-3 logout">
+                            <p>Vous êtes connecté avec l'adresse mail : {{ app.user.username }}.</p>
+                            <a href="{{ path('app_logout') }}">Déconnectez-vous</a>
+                    </div>
+
+                    <div class="comments">
+                        <h2>Les commentaires que vous avez postés</h2>
+                        {% for comment in app.user.comments %}
+                            <div class="comment-products">
+                                <span class="product-comment">Produit commenté</span> <a href="{{ path('front_show_product', {'id' : comment.product.id}) }}"> : {{ comment.product.name }}</a>
+                                <span class="real-comment">Commentaire : </span><p>{{ comment.content }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+    {% endif %}
+
+    {% if app.user is null %}
+            <div class="login">
+                    <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
+                    <label for="inputEmail" class="label-log">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control input-log" autocomplete="email" required autofocus>
+                    <label for="inputPassword" class="label-log">Mot de passe</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control input-log" autocomplete="current-password" required>
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+                    <button class="btn btn-lg btn-primary btn-log" type="submit">
+                            Se connecter
+                    </button>
+            </div>
+
+    {% endif %}
+
+
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+    #}
+
+
+</form>
+{% endblock %}

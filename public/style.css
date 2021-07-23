@@ -376,5 +376,77 @@ footer{
     margin: 0 auto;
 }
 
+.logout{
+    text-align: center;
+    font-size: 1.6em;
+    color : mediumblue;
+}
+
+.logout a{
+    color: white;
+    text-decoration: none;
+    background-color: darkred;
+    border: darkred solid 5px;
+    border-radius: 10px;
+}
+
+.comments h2{
+    color: darkblue;
+}
+
+.comment-products{
+    width: 60%;
+    margin: 0 auto;
+    border: solid 2px navy;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.comment-products a{
+    text-decoration: none;
+    font-size: 1.4em;
+}
+
+.product-comment{
+    text-decoration: underline;
+    color: dodgerblue;
+    font-size: 1.4em;
+}
+
+.real-comment{
+    text-decoration: underline;
+    display: block;
+}
+
+.no-line{
+    text-decoration: none;
+}
+
+.input-log{
+    margin: 1% auto;
+    width: 60% !important;
+    display: block;
+}
+
+.label-log{
+    margin-left: 20%;
+}
+
+.btn-log{
+    margin-left : 20%;
+    margin-top: 1%;
+}
+
+.login{
+    margin-top: 1%;
+}
+
+.w10{
+    width: auto;
+    height: 3.5vh;
+}
+
+
+
 
 
