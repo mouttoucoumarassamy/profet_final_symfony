@@ -18,7 +18,7 @@ class FrontHomeController extends AbstractController
     public function home(CategoryRepository $categoryRepository)
     {
         $categories =$categoryRepository->findAll();
-        $id = 1;
+        $id = rand(1, count($categories));
         $categorie = $categoryRepository->find($id);
         if($categorie){
             return $this->render('front/home.html.twig', ['categorie' => $categorie]);
