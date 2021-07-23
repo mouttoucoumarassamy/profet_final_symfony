@@ -40,6 +40,14 @@
         </div>
         <div class="card-product">
                 <h1 >{{ product.name }}</h1>
+            {% set l = 0 %}
+            {% set n = 0 %}
+            {% for note in product.notes %}
+            {% set l = l + note.note  %}
+                {% set n = n + 1   %}
+            {% endfor %}
+                {% set m = l/n %}
+                <p class="note-product">Note : {{ m |number_format(2) }}/10</p>
                 <h4><a href="{{ path('front_categorie_show', {'id' : product.category.id}) }}">{{ product.category.name }}</a> -
                     <a href="{{ path('front_show_licence', {'id' : product.licence.id}) }}">{{ product.licence.name }}</a></h4>
                 <h2 >{{ product.price }} €</h2>

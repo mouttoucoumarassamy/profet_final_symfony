@@ -98,7 +98,7 @@ class AdminProductController extends AbstractController
     }
 
     /**
-     * @Route("/admin/product/add/", name="admin_product_update")
+     * @Route("/admin/product/add/", name="admin_product_add")
      */
     public function productAdd(
                                   CategoryRepository $categoryRepository,

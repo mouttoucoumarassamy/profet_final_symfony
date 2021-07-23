@@ -515,6 +515,31 @@ footer{
      text-decoration: underline;
  }
 
+.add-product{
+    width: 15%;
+    margin: 1% 42.5%;
+}
+
+ .add{
+     background-color: steelblue;
+     color :white;
+     padding: 2% 5%;
+     text-decoration: none;
+     text-align: center;
+     font-size: 1.2em;
+     border: solid 2px midnightblue;
+     border-radius: 5px;
+ }
+
+ .note-product{
+     width: 20%;
+     margin: 0% 40%;
+     font-size: 1.2em;
+     font-weight: bold;
+     text-align: center;
+     color: royalblue;
+ }
+
 
 
 
