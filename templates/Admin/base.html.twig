@@ -26,14 +26,27 @@
         </div>
         <div class="w40">
             <div class="categories">
-                <a href="{{ path('admin_categories_list') }}">Catégories</a>
+                <a href="{{ path('front_categories_list') }}">Catégories</a>
             </div>
             <div class="licences">
-                <a href="{{  path('admin_list_licence') }}">Licences</a>
+                <a href="{{  path('front_list_licence') }}">Licences</a>
             </div>
-            <div class="login">
-                <a href="{{ path('app_login') }}">Se connecter</a>
+            <div class="basket">
+                <a href="{{ path('admin_list_product') }}">Produits</a>
             </div>
+            <div class="log">
+                <a href="{{ path('app_login') }}">{% if app.user %}
+                        {{ app.user.firstname }} {{ app.user.name  }}
+                        {% if app.user.media %}
+                            <img src="{{ asset('img/media/' ~ app.user.media.src) }}" class="w10">
+                        {% endif %}
+                    {% endif %}
+                    {% if app.user is null %}
+                        Se connecter/S'inscrire
+                    {% endif %}
+                </a>
+            </div>
+
         </div>
     </div>
 </header>
@@ -71,7 +84,11 @@
     </div>
 </footer>
 
-{% block script %}
-{% endblock %}
+<script>
+    function myFunction() {
+        setTimeout(function(){ document.querySelector(".flash-notice").style.display = "none";}, 5000)
+    }
+    myFunction();
+</script>
 </body>
 </html>

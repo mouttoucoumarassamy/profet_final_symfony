@@ -1,9 +1,5 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block link %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-{% endblock %}
-
 {% block metaTitle %}
     Ajout d'products
 {% endblock metaTitle %}
@@ -11,68 +7,44 @@
 {% block main %}
     <div class="container-fluid1">
         <div class="row1 licence w95">
-            <h1>Vous pouvez rajouter un product</h1>
+            <h1>Vous pouvez rajouter un produit</h1>
 
-            {{ {#  form(ProductForm) #} }}
+            <form action="{{ path('admin_product_save_add') }}" method="post" class="form">
+                <input type="text" name="name" class="input-product" placeholder="Entrer le nom du produit">
+                <input type="text" name="price" class="input-product" placeholder="Entrer le prix du produit" >
+                <input type="text" name="stock" class="input-product" placeholder="Entrer le nombre d'exemplaires du produit">
+                <select name="id_licence" id="" class="input-product">
+                    <option value="">Choissisez une licence</option>
+                    {% for licence in licences %}
+                        <option value="{{ licence.id}}">
+                            {{ licence.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <select name="id_category" id="" class="input-product">
+                    <option value="">Choissisez une catégorie</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id}}">
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <label class="label-radio">Choissisez une ou des images</label>
+                    {% set i = 0 %}
+                    {% for media in medias %}
+                        {% set i = i + 1 %}
+                        <div class="radio">
+                            <input type="radio" name="{{'img' ~ i }}" value="{{ media.src }}"><label for="{{ 'img' ~ i }}"><img
+                                        src="{{asset('img/media/' ~ media.src)  }}" alt="{{ media.alt }}" class="img-product-add"></label>
+                        </div>
 
-           {#
+                    {% endfor %}
+                </select>
 
-           {{ form_start(productForm) }}
-
-            {{ form_label(productForm.title, 'Nom :', {'label_attr' : {'class'  : 'label'}}) }}
-            <div class="d-flex justify-content-center">
-                <div class="w60">
-                    {{ form_widget(productForm.name, {'attr' : {'class'  : 'form-control', 'placeholder' : 'Nom du produit'}}) }}
-                </div>
-            </div>
-            <div >
-                {{ form_errors(productForm.name) }}
-            </div>
-
-
-            {{ form_label(productForm.price, 'Contenu :', {'label_attr' : {'class'  : 'label'}}) }}
-            <div class="d-flex justify-content-center">
-                <div class="w60">
-                    {{ form_widget(productForm.price, {'attr' : {'class'  : 'form-control', 'placeholder' : 'Prix du produit'}}) }}
-                </div>
-            </div>
-            <div>
-                {{ form_errors(productForm.price) }}
-            </div>
-
-
-            <div>
-                {{ form_label(productForm.stock, 'Stock :', {'label_attr' : {'class'  : 'label'}}) }}
-                <div>
-                    {{ form_widget(productForm.stock, {'attr' : {'class'  : ''}}) }}
-                </div>
-
-            </div>
-
-
-            <div>
-                {{ form_label(productForm.category, 'Catégorie :', {'label_attr' : {'class'  : 'label'}}) }}
-                <div>
-                    {{ form_widget(productForm.category, {'attr' : {'class'  : ''}}) }}
-                </div>
-
-            </div>
-
-            <div>
-                {{ form_label(productForm.licence, 'Licence :', {'label_attr' : {'class'  : 'label'}}) }}
-                <div>
-                    {{ form_widget(productForm.licence, {'attr' : {'class'  : ''}}) }}
-                </div>
-
-            </div>
-
-            <div>
-                {{ form_widget(productForm.submit, {'attr' : {'class'  : 'btn btn-primary my-3'}, 'label': 'Enregister'}) }}
-            </div>
+                <input type="submit" value="Ajouter" class="button-product">
+            </form>
 
 
-            {{ form_end(productForm) }}
-           #}
 
 
         </div>

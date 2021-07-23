@@ -4,8 +4,11 @@
 namespace App\Controller\Admin;
 
 
+use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\CategoryRepository;
+use App\Repository\LicenceRepository;
+use App\Repository\MediaRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -35,6 +38,9 @@ class AdminProductController extends AbstractController
         $product = $productRepository->find($id);
         $entityManager->remove($product);
         $entityManager->flush();
+        $this->addFlash(
+            'notice',
+            'Votre produit est supprimé');
 
         return $this->redirectToRoute('admin_list_product');
     }
@@ -43,46 +49,125 @@ class AdminProductController extends AbstractController
      * @Route("/admin/product/update/{id}", name="admin_product_update")
      */
     public function productUpdate($id,
-                                  Request $request,
-                                  
-                                  ProductRepository $productRepository,
-                                  EntityManagerInterface $entityManager): Response
+                                  CategoryRepository $categoryRepository,
+                                  LicenceRepository $licenceRepository,
+                                  ProductRepository $productRepository)
     {
-        //$product = $productRepository->find($id);
-
-        //$title = $request->request->get('title');
-        //$content = $request->request->get('content');
-        //$is_published = $request->request->get('is_published');
-        //$id_category = $categoryRepository->find($request->request->get('id_category')) ;
-        //$id_tag = $tagRepository->find($request->request->get('id_tag'));
-
-        //$product->setTitle($title);
-        //$product->setContent($content);
-        //$product->setIsPublished($is_published);
-        //$product->setCategory($id_category);
-        //$product->setTag($id_tag);
-
-        //$entityManager->persist($product);
-        //$entityManager->flush();
-
-        //return $this->redirectToRoute('admin_product_list');
-
         $product = $productRepository->find($id);
-
-        $productForm = $this->createForm(ProductType::class, $product);
-
-        $productForm->handleRequest($request);
-
-        if($productForm->isSubmitted() && $productForm->isValid()){
-            $entityManager->persist($product);
-            $entityManager->flush();
-            $this->addFlash(
-                'notice',
-                'Votre produit est modifié');
-            return $this->redirectToRoute('admin_list_product');
-        }
-
-        return $this->render('admin/productadd.html.twig', ['productForm' => $productForm->createView()]);
+        $categories = $categoryRepository->findAll();
+        $licences = $licenceRepository->findAll();
+        return $this->render('admin/productupdate.html.twig', ['product' => $product,
+            'categories' => $categories,
+            'licences' => $licences]);
     }
 
+    /**
+     * @Route("/admin/product/save/{id}", name="admin_product_save")
+     */
+    public function saveProduct($id,
+                                Request $request,
+                                EntityManagerInterface $entityManager,
+                                ProductRepository $productRepository,
+                                CategoryRepository $categoryRepository,
+                                LicenceRepository $licenceRepository)
+    {
+        //dump($request);
+        //die;
+        $product = $productRepository->find($id);
+
+        $name = $request->request->get('name');
+        $price = $request->request->get('price');
+        $stock = $request->request->get('stock');
+        $id_category = $categoryRepository->find($request->request->get('id_category')) ;
+        $id_licence = $licenceRepository->find($request->request->get('id_licence'));
+
+        $product->setName($name);
+        $product->setPrice($price);
+        $product->setStock($stock);
+        $product->setCategory($id_category);
+        $product->setLicence($id_licence);
+
+        $entityManager->persist($product);
+        $entityManager->flush();
+        $this->addFlash(
+            'notice',
+            'Votre produit est modifié');
+
+        return $this->redirectToRoute('admin_list_product');
+
+    }
+
+    /**
+     * @Route("/admin/product/add/", name="admin_product_update")
+     */
+    public function productAdd(
+                                  CategoryRepository $categoryRepository,
+                                  LicenceRepository $licenceRepository,
+                                    MediaRepository $mediaRepository)
+    {
+        $medias = $mediaRepository->findAll();
+        $categories = $categoryRepository->findAll();
+        $licences = $licenceRepository->findAll();
+        return $this->render('admin/productadd.html.twig', [
+            'categories' => $categories,
+            'licences' => $licences,
+            'medias' => $medias]);
+    }
+
+    /**
+     * @Route("/admin/product/add/save/", name="admin_product_save_add")
+     */
+    public function saveAddProduct(
+                                Request $request,
+                                EntityManagerInterface $entityManager,
+                                ProductRepository $productRepository,
+                                CategoryRepository $categoryRepository,
+                                LicenceRepository $licenceRepository,
+                                MediaRepository $mediaRepository)
+    {
+        //dump($request);
+        //die;
+        $product = new Product();
+
+        $name = $request->request->get('name');
+        $price = $request->request->get('price');
+        $stock = $request->request->get('stock');
+        //$media = $request->request->get('media');
+        $medias = [];
+        $mediaFounded =[];
+
+        $mediasAll = $mediaRepository->findAll();
+        $l = count($mediasAll);
+
+        for($i = 1 ; $i <= $l; $i++){
+            if(!empty($request->request->get('img'.$i))){
+                $medias[] = $request->request->get('img'.$i);
+            }
+        };
+        foreach ($medias as $media){
+            $mediaUp[] = $mediaRepository->findBy(['src' => $media]);
+            }
+
+        foreach ($mediaUp as $images => $img){
+            dump($img[0])->setProduct($product);
+        }
+
+        $id_category = $categoryRepository->find($request->request->get('id_category')) ;
+        $id_licence = $licenceRepository->find($request->request->get('id_licence'));
+
+        $product->setName($name);
+        $product->setPrice($price);
+        $product->setStock($stock);
+        $product->setCategory($id_category);
+        $product->setLicence($id_licence);
+
+        $entityManager->persist($product);
+        $entityManager->flush();
+        $this->addFlash(
+            'notice',
+            'Votre produit est ajouté');
+
+        return $this->redirectToRoute('admin_list_product');
+
+    }
 }

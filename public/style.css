@@ -470,6 +470,52 @@ footer{
     font-size: 1.2em;
 }
 
+.input-product{
+    display: block;
+    margin: 1% 30%;
+    width: 40%;
+    font-size: 1.2em;
+    border-radius: 10px;
+}
+
+.button-product{
+    background-color: lightblue;
+    color: black;
+    font-size: 1.2em;
+    border-radius: 10px;
+    margin: 1% 30%;
+    padding: 0 1%;
+}
+
+.flash-notice{
+    margin: 1% auto;
+    color: darkblue;
+    background-color: #5eb5e0;
+    border: darkblue 5px solid;
+    font-size: 1.8em;
+    text-align: center;
+    width: 20%;
+    padding: 1% 2%;
+    border-radius: 20px;
+}
+ .radio{
+     width: 30%;
+     margin: 1% 35%;
+ }
+
+ .img-product-add{
+     width : 25%;
+     height: auto;
+ }
+
+ .label-radio{
+     width: 30%;
+     margin: 1% 35%;
+     font-size: 1.2em;
+     text-decoration: underline;
+ }
+
+
 
 
 
