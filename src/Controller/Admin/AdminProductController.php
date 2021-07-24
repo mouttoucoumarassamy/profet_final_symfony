@@ -148,8 +148,10 @@ class AdminProductController extends AbstractController
             $mediaUp[] = $mediaRepository->findBy(['src' => $media]);
             }
 
-        foreach ($mediaUp as $images => $img){
+        if(!empty($mediaUp)){
+            foreach ($mediaUp as $images => $img){
             dump($img[0])->setProduct($product);
+            }
         }
 
         $id_category = $categoryRepository->find($request->request->get('id_category')) ;

@@ -540,6 +540,27 @@ footer{
      color: royalblue;
  }
 
+ .admin-infos{
+     width: 30%;
+     text-align: center;
+ }
+ .admin-infos ul{
+     margin: 1% auto;
+ }
+
+ .admin-infos li{
+     margin: 1% auto;
+ }
+
+ .h70{
+     height: 73.2vh;
+ }
+
+ .intro-admin{
+     padding-top : 10%;
+ }
+
+
 
 
 

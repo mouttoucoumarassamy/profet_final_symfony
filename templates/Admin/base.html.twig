@@ -14,7 +14,7 @@
 <header >
     <div class="header">
         <div class="w20">
-            <a href="{{ path('front_home') }}">
+            <a href="{{ path('admin_home') }}">
                 Accueil{# <img class="w35" src="{{ asset('') }}"> #}
             </a>
         </div>
@@ -58,27 +58,27 @@
 
 <footer >
     <div class="footer">
-        <div class="info">
+        <div class="admin-infos">
             <ul>
-                <li class="about">
-                    <a href="#">Informations</a>
+                <li>
+                    <a href="#">Commandes</a>
                 </li>
                 <li>
-                    <a href="#">Carrières</a>
+                    <a href="#">Commentaires</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="#">Notes</a>
                 </li>
             </ul>
         </div>
         <div class="up">
             <a href="#top">Retour en haut</a>
         </div>
-        <div class="social">
+        <div class="admin-infos">
             <ul>
-                <li><a href="https://fr-fr.facebook.com/"><img class="facebook" src="{{ asset('img/logo/facebook.png') }}" alt="facebook"></a></li>
-                <li><a href="https://www.youtube.com/"><img src="{{ asset('img/logo/youtube.png') }}" alt="youtube"></a></li>
-                <li><a href="https://twitter.com/?lang=fr"><img src="{{ asset('img/logo/twitter.png') }}" alt="twitter"></a></li>
+                <li><a href="{{ path('admin_list_product') }}">Produits</a></li>
+                <li><a href="{{  path('front_list_licence') }}">Licences</a></li>
+                <li><a href="{{ path('front_categories_list') }}">Catégories</a></li>
             </ul>
         </div>
     </div>
