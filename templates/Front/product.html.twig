@@ -46,7 +46,11 @@
             {% set l = l + note.note  %}
                 {% set n = n + 1   %}
             {% endfor %}
-                {% set m = l/n %}
+                {% if n > 0 %}
+                    {% set m = l/n %}
+                    {% else %}
+                    {% set m = 0 %}
+                {% endif %}
                 <p class="note-product">Note : {{ m |number_format(2) }}/10</p>
                 <h4><a href="{{ path('front_categorie_show', {'id' : product.category.id}) }}">{{ product.category.name }}</a> -
                     <a href="{{ path('front_show_licence', {'id' : product.licence.id}) }}">{{ product.licence.name }}</a></h4>
@@ -68,6 +72,21 @@
 
             </div>
         {% endfor %}
+        {% if app.user %}
+            <div class="commente-publish">
+                <form action="{{ path('front_add_note', {'id' : product.id}) }}" method="post">
+                    <input type="number" min="0" max="10" name="note" placeholder="Donnez votre note" class="note">
+                    <input type="submit" value="Noter" class="button">
+                </form>
+                <form action="{{ path('front_add_comment', {'id' : product.id}) }}" method="post" class="form">
+                    <label for="content">Ecrivez votre commentaire</label>
+                    <textarea name="content" id="content" cols="30" rows="10" class="input" placeholder="Ecrivez votre commentaire">
+
+                    </textarea>
+                    <input type="submit" value="Ajouter" class="button">
+                </form>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 

@@ -560,6 +560,35 @@ footer{
      padding-top : 10%;
  }
 
+.commente-publish{
+    width : 60%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.commente-publish .form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.commente-publish form{
+    width: 45%;
+}
+
+.commente-publish input{
+    margin: 0 auto;
+    width : 35%;
+}
+
+.commente-publish label{
+    margin: 0 auto;
+}
+
+.commente-publish textarea{
+    margin: 0 auto;
+}
 
 
 
