@@ -1,0 +1,20 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block main %}
+
+    <div class="container">
+        {% for categorie in categories %}
+            <div class="card br">
+                <img src="{{ asset('img/media/' ~ categorie.media) }}">
+                <h2>
+                    {{ categorie.description }}
+                </h2>
+                <a href="{{ path('admin_delete_category', {'id' : categorie.id} ) }}" class="delete">Supprimer la catégorie</a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="page">
+        {{ knp_pagination_render(categories) }}
+    </div>
+
+{% endblock %}
