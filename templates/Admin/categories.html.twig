@@ -10,6 +10,7 @@
                     {{ categorie.description }}
                 </h2>
                 <a href="{{ path('admin_delete_category', {'id' : categorie.id} ) }}" class="delete">Supprimer la catégorie</a>
+                <a href="{{ path('admin_category_update', {'id' : categorie.id} ) }}" class="update">Modifier la catégorie</a>
             </div>
         {% endfor %}
     </div>

@@ -37,4 +37,45 @@ class AdminCategoryController extends AbstractController
         return $this->redirectToRoute('admin_list_categories');
     }
 
+    /**
+     * @Route("/admin/category/update/{id}", name="admin_category_update")
+     */
+    public function categoryUpdate($id,
+                                  CategoryRepository $categoryRepository
+                                  )
+    {
+        $categorie = $categoryRepository->find($id);
+
+        return $this->render('admin/categoryupdate.html.twig', [
+            'categorie' => $categorie]);
+    }
+
+    /**
+     * @Route("/admin/categoty/save/{id}", name="admin_category_save")
+     */
+    public function saveCategory($id,
+                                Request $request,
+                                CategoryRepository $categoryRepository,
+                                EntityManagerInterface $entityManager
+                                )
+    {
+        //dump($request);
+        //die;
+        $category = $categoryRepository->find($id);
+
+        $name = $request->request->get('name');
+        $description = $request->request->get('description');
+
+        $category->setName($name);
+        $category->setDescription($description);
+
+        $entityManager->persist($category);
+        $entityManager->flush();
+        $this->addFlash(
+            'notice',
+            'Votre produit est modifié');
+
+        return $this->redirectToRoute('admin_list_categories');
+    }
+
 }
