@@ -10,10 +10,8 @@
             <h1>Vous pouvez modifier la catégorie</h1>
 
             <form action="{{ path('admin_category_save', {'id' : categorie.id}) }}" method="post" class="form">
-                <input type="text" name="name" class="input-product" placeholder="Entrer le nom dde la catégorie" value="{{ categorie.name }}">
-                <textarea name="description" id="description" cols="30" rows="10" class="input-product">
-                    {{ categorie.description }}
-                </textarea>
+                <input type="text" name="name" class="input-product" placeholder="Entrer le nom de la catégorie" value="{{ categorie.name }}">
+                <textarea name="description" id="description" cols="30" rows="10" class="input-product">{{ categorie.description }}</textarea>
                 </select>
                 <input type="submit" value="Modifier" class="button-product">
             </form>
