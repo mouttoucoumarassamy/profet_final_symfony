@@ -3,6 +3,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,7 +74,42 @@ class AdminCategoryController extends AbstractController
         $entityManager->flush();
         $this->addFlash(
             'notice',
-            'Votre produit est modifié');
+            'Votre catégorie est modifiée');
+
+        return $this->redirectToRoute('admin_list_categories');
+    }
+
+    /**
+     * @Route("/admin/categorie/add/", name="admin_categorie_add")
+     */
+    public function categorieAdd()
+    {
+        return $this->render('admin/categoryadd.html.twig');
+    }
+
+    /**
+     * @Route("/admin/categoty/add/save/", name="admin_category_add_save")
+     */
+    public function saveAddCategory(
+                                 Request $request,
+                                 EntityManagerInterface $entityManager
+    )
+    {
+        //dump($request);
+        //die;
+        $category = new Category();
+
+        $name = $request->request->get('name');
+        $description = $request->request->get('description');
+
+        $category->setName($name);
+        $category->setDescription($description);
+
+        $entityManager->persist($category);
+        $entityManager->flush();
+        $this->addFlash(
+            'notice',
+            'Votre catégorie est ajoutée');
 
         return $this->redirectToRoute('admin_list_categories');
     }

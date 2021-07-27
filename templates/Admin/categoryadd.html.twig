@@ -1,0 +1,26 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block metaTitle %}
+    Modification de catégorie
+{% endblock metaTitle %}
+
+{% block main %}
+    <div class="container-fluid1">
+        <div class="row1 licence w95">
+            <h1>Vous pouvez modifier la catégorie</h1>
+
+            <form action="{{ path('admin_category_add_save') }}" method="post" class="form">
+                <input type="text" name="name" class="input-product" placeholder="Entrer le nom de la catégorie" >
+                <textarea name="description" id="description" cols="30" rows="10" class="input-product">
+
+                </textarea>
+                </select>
+                <input type="submit" value="Modifier" class="button-product">
+            </form>
+
+
+
+
+        </div>
+    </div>
+{% endblock main %}

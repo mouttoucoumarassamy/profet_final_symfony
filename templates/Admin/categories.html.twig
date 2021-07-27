@@ -1,7 +1,11 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block main %}
-
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="container">
         {% for categorie in categories %}
             <div class="card br">
@@ -13,9 +17,13 @@
                 <a href="{{ path('admin_category_update', {'id' : categorie.id} ) }}" class="update">Modifier la catégorie</a>
             </div>
         {% endfor %}
+        <div class="page">
+            {{ knp_pagination_render(categories) }}
+        </div>
     </div>
-    <div class="page">
-        {{ knp_pagination_render(categories) }}
+
+    <div class="add-product">
+        <a href="{{ path('admin_categorie_add') }}" class="add">Ajouter une catégorie</a>
     </div>
 
 {% endblock %}
