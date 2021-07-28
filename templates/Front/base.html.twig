@@ -20,8 +20,9 @@
         </div>
         <div class="search">{# path('front_search') #}
             <form action="{{ path('front_search') }}" class="form" method="get">
-                <input class="input" type="search" placeholder="Rechercher..." name="q">
+                <input class="input" type="search" placeholder="Rechercher..." name="q" id="searchinput">
                 <input type="submit" class="button" value="Rechercher">
+                <div class="suggestions" id="suggestions"></div>
             </form>
         </div>
         <div class="w40">
@@ -83,7 +84,13 @@
     </div>
 </footer>
 
-{% block script %}
-{% endblock %}
+<script>
+
+    const searchinput = document.getElementById('searchinput');
+    searchinput.addEventListener('keyup', function (){
+        const input = searchinput.value;
+        console.log(input);
+    })
+</script>
 </body>
 </html>

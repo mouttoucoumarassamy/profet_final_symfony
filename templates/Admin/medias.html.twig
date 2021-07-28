@@ -1,0 +1,27 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block main %}
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container">
+        {% for media in medias %}
+            <div class="card">
+                <h1>{{ media.title }}</h1>
+                <img src="{{ asset('img/media/' ~ media.src) }}" alt="{{ media.alt }}">
+                {# <a href="{{ path('admin_media_product', {'id' : media.id} ) }}" class="delete">Supprimer l'image'</a> #}
+                {# <a href="{{ path('admin_media_update', {'id' : media.id} ) }}" class="update">Modifier l'image'</a> #}
+            </div>
+        {% endfor %}
+        <div class="page">
+            {{ knp_pagination_render(medias) }}
+        </div>
+    </div>
+
+    <div class="add-product">
+        {# <a href="{{ path('admin_media_add') }}" class="add">Ajouter une image</a> #}
+    </div>
+
+{% endblock %}

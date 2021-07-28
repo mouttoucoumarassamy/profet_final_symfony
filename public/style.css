@@ -312,7 +312,7 @@ footer{
 .pagination a {
     color: black;
     float: left;
-    padding: 8px 16px;
+    padding: 4px 8px;
     text-decoration: none;
     list-style: none;
     font-size: 1.2em;
@@ -325,7 +325,7 @@ footer{
     margin : auto 2%;
     background-color: darkred;
     color : white;
-    padding: 6% 11%;
+    padding: 3% 6%;
     border : solid 1px indianred;
     border-radius: 5px;
 }
