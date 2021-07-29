@@ -37,4 +37,10 @@ class AdminMediaController extends AbstractController
         return $this->redirectToRoute('admin_list_medias');
     }
 
+    /**
+     * @Route("/admin/media/update/{id}", name="admin_update_media")
+     */
+    public function updateMedia(){
+        return $this->render('admin/upadtemedia.html.twig');
+    }
 }
