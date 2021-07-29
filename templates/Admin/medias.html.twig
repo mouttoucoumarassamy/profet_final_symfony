@@ -11,7 +11,7 @@
             <div class="card">
                 <h1>{{ media.title }}</h1>
                 <img src="{{ asset('img/media/' ~ media.src) }}" alt="{{ media.alt }}">
-                {# <a href="{{ path('admin_media_product', {'id' : media.id} ) }}" class="delete">Supprimer l'image'</a> #}
+                 <a href="{{ path('admin_delete_media', {'id' : media.id} ) }}" class="delete">Supprimer l'image</a>
                 {# <a href="{{ path('admin_media_update', {'id' : media.id} ) }}" class="update">Modifier l'image'</a> #}
             </div>
         {% endfor %}
