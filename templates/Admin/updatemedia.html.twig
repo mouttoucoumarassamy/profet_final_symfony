@@ -8,10 +8,10 @@
     <div class="container-fluid1">
         <div class="row1 licence w95">
             <h1>Vous pouvez modifier l'image</h1>
-
             <form action="{{ path('admin_media_update_save', {'id' : media.id}) }}" method="post" class="form" enctype="multipart/form-data">
                 <input type="text" name="title" class="input-product" placeholder="Entrer le nom de l'image" value="{{ media.title }}">
-                <input type="file" name="image" id="fichier" placeholder="Votre image" class="input">
+                <label class="label-media" for="fichier">Choisissez une image</label>
+                <input type="file" name="image" id="fichier" placeholder="Votre image" class="file">
                 <input type="submit" value="Modifier" class="button-product">
             </form>
         </div>

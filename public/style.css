@@ -590,6 +590,52 @@ footer{
     margin: 0 auto;
 }
 
+.file{
+    margin: 1% 0% 1% 30%;
+
+}
+
+.label-media{
+    display: block;
+    margin: 1% 0% 0% 30%;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.comment-card{
+    width: 60%;
+    margin: 1% 20%;
+    border: 2px solid black;
+    font-size: 1.2em;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.comment-card p{
+    margin: 1% 0%;
+}
+
+.comment-p{
+    font-weight: bold;
+}
+
+.note-card{
+    width: 60%;
+    margin: 1% 20%;
+    border: 2px solid black;
+    font-size: 1.2em;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.note-card p{
+    margin: 1% 0%;
+}
+
+.note-p{
+    font-weight: bold;
+}
+
 
 
 

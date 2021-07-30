@@ -63,10 +63,10 @@
                     <a href="#">Commandes</a>
                 </li>
                 <li>
-                    <a href="#">Commentaires</a>
+                    <a href="{{ path('admin_list_comments') }}">Commentaires</a>
                 </li>
                 <li>
-                    <a href="#">Notes</a>
+                    <a href="{{ path('admin_list_notes') }}">Notes</a>
                 </li>
             </ul>
         </div>
@@ -76,8 +76,8 @@
         <div class="admin-infos">
             <ul>
                 <li><a href="{{ path('admin_list_product') }}">Produits</a></li>
-                <li><a href="{{  path('front_list_licence') }}">Licences</a></li>
-                <li><a href="{{ path('front_categories_list') }}">Catégories</a></li>
+                <li><a href="{{  path('admin_list_licences') }}">Licences</a></li>
+                <li><a href="{{ path('admin_list_categories') }}">Catégories</a></li>
             </ul>
         </div>
     </div>
