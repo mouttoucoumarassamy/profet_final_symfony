@@ -636,6 +636,48 @@ footer{
     font-weight: bold;
 }
 
+.marginput{
+    font-size: 1.4em;
+    margin : 0% 20%;
+}
+
+.margin-button{
+    font-size: 1.4em;
+    margin: 1% 0 0 20% ;
+}
+
+.margin-top{
+    margin-top: 1%;
+}
+
+.margin-top label{
+    font-size: 1.2em;
+    margin-left: 20%;
+    font-weight: bold;
+}
+
+.count{
+    margin: 0% 20%;
+    padding: 0.5% 1%;
+    font-size: 1.4em;
+    border: 1px mediumseagreen solid;
+    background-color: mediumseagreen;
+    color: black;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.create-count{
+    margin-top: 2%;
+    margin-bottom: 8%;
+}
+
+#update-count{
+    background-color: mediumseagreen;
+    border: mediumseagreen 5px solid;
+    color: black;
+}
+
 
 
 

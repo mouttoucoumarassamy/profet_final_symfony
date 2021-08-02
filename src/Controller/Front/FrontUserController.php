@@ -44,4 +44,27 @@ class FrontUserController extends AbstractController
 
     }
 
+    /**
+     * @Route("/user/update/{id}", name="log_update")
+     */
+    public function updateUser($id,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, Request $request, UserPasswordEncoderInterface $encoder, UserRepository $userRepository)
+    {
+
+        $user = $userRepository->find($id);
+        $userForm = $this->createForm(UserType::class, $user);
+        $userForm->handleRequest($request);
+
+        if($userForm->isSubmitted() && $userForm->isValid()){
+            $plainPassword = $userForm->get('password')->getData();
+            $hashedPassword = $userPasswordHasher->hashPassword($user, $plainPassword);
+            $user->setPassword($hashedPassword);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('front_home');
+        }
+
+        return $this->render('front/userupdate.html.twig', ['userForm' => $userForm->createView()]);
+
+    }
+
 }

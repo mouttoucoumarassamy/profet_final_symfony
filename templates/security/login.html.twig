@@ -16,6 +16,7 @@
 
                     <div class="mb-3 logout">
                             <p>Vous êtes connecté avec l'adresse mail : {{ app.user.username }}.</p>
+                            <a href="{{ path('log_update', {'id' : app.user.id}) }} " id="update-count">Modifiez votre compte</a>
                             <a href="{{ path('app_logout') }}">Déconnectez-vous</a>
                     </div>
 
@@ -65,5 +66,12 @@
 
 
 </form>
-    <a href="{{ path('log_add') }}">Vous n'êtes pas inscrit, créez un compte</a>
+
+    {% if app.user is null %}
+        <div class="create-count">
+            <a href="{{ path('log_add') }}" class="count">Créez un compte</a>
+        </div>
+    {% endif %}
+
+
 {% endblock %}

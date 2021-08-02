@@ -86,6 +86,10 @@
                     <input type="submit" value="Ajouter" class="button">
                 </form>
             </div>
+            {% else %}
+            <div class="alert-comment">
+                <p>Vous devez être connecté pour poster un commentaire et noter un produit</p>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
