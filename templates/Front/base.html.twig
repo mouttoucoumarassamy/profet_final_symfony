@@ -33,7 +33,8 @@
                 <a href="{{  path('front_list_licence') }}">Licences</a>
             </div>
             <div class="log">
-                <a href="{{ path('app_login') }}">{% if app.user %}
+                <a href="{{ path('app_login') }}">
+                    {% if app.user %}
                     {{ app.user.firstname }} {{ app.user.name  }}
                         {% if app.user.media %}
                             <img src="{{ asset('img/media/' ~ app.user.media.src) }}" class="w10">
