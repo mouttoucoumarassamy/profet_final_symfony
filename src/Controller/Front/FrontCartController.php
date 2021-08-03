@@ -48,7 +48,17 @@ class FrontCartController extends AbstractController
 
         $session->set('panier', $panier);
 
-        dd($session->get('panier'));
+        return $this->redirectToRoute('front_show_product', ['id' => $id]);
+    }
+
+    /**
+     * @Route("/cart/delete/", name="delete_cart")
+     */
+    public function deleteCart(SessionInterface $session)
+    {
+        $panier = $session->get('panier', []);
+
+        dd($panier);
     }
 
 

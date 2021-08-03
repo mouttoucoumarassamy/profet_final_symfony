@@ -5,24 +5,46 @@
         {% if items == [] %}
             <p>Panier vide</p>
             {% else %}
+                {% set n = 0 %}
+                {% set p = 0 %}
                 {% for product in items %}
-                        <div class="row">
-                            <div class="col">
+                    {% set n = n + product.quantity * 1  %}
+                    {% set p = p + product.product.price * product.quantity  %}
+                        <div class="row cart-div">
+                            <div class="col-20">
                                 <img src="{{ asset('img/media/' ~ product.product.media[0].src) }}" alt="">
                             </div>
-                            <div class="col">
+                            <div class="col-20">
+                                <h2>Produit :</h2>
                                 <h2>{{ product.product.name }}</h2>
                             </div>
-                            <div class="col">
-                                <h3>{{ product.product.price }}</h3>
+                            <div class="col-20">
+                                <h2>Prix : </h2>
+                                <h2>{{ product.product.price }} €</h2>
                             </div>
-                            <div class="col">
-                                <h4>{{ product.quantity }}</h4>
+                            <div class="col-20">
+                                <h2>Quantité :</h2>
+                                <h2>{{ product.quantity }}</h2>
+                            </div>
+                            <div class="col-20">
+                                <a href="{{ path('delete_cart') }}" class="delete-product-cart">
+                                    Supprimer
+                                </a>
                             </div>
                         </div>
                 {% endfor %}
-            <div class="">
-
+            <div class="row cart-div">
+                <div class="col-30">
+                    <h2>Nombre d'article :</h2>
+                    <h2>{{ n }}</h2>
+                </div>
+                <div class="col-30">
+                    <h2>Prix total :</h2>
+                    <h2>{{ p }} €</h2>
+                </div>
+                <div class="col-30">
+                    <a href="#">Confirmer</a>
+                </div>
             </div>
         {% endif %}
 
