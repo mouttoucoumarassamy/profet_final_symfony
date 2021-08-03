@@ -2,6 +2,29 @@
 
 {% block main %}
     <div class="container">
-        <p>Panier vide</p>
+        {% if items == [] %}
+            <p>Panier vide</p>
+            {% else %}
+                {% for product in items %}
+                        <div class="row">
+                            <div class="col">
+                                <img src="{{ asset('img/media/' ~ product.product.media[0].src) }}" alt="">
+                            </div>
+                            <div class="col">
+                                <h2>{{ product.product.name }}</h2>
+                            </div>
+                            <div class="col">
+                                <h3>{{ product.product.price }}</h3>
+                            </div>
+                            <div class="col">
+                                <h4>{{ product.quantity }}</h4>
+                            </div>
+                        </div>
+                {% endfor %}
+            <div class="">
+
+            </div>
+        {% endif %}
+
     </div>
 {% endblock %}

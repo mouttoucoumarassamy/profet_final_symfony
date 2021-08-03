@@ -29,8 +29,6 @@ class FrontCartController extends AbstractController
                 'quantity' => $quantity
             ];
         }
-
-        dd($panierWithData);
         return $this->render('front/panier.html.twig', ['items' => $panierWithData]);
     }
 
