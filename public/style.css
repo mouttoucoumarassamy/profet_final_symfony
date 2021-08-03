@@ -678,6 +678,11 @@ footer{
     color: black;
 }
 
+.alert-comment p{
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
 
 
 

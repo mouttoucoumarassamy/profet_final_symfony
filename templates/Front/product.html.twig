@@ -56,7 +56,7 @@
                     <a href="{{ path('front_show_licence', {'id' : product.licence.id}) }}">{{ product.licence.name }}</a></h4>
                 <h2 >{{ product.price }} €</h2>
                 <h3>Nombre de produits en stock : {{ product.stock }}</h3>
-                <a class="text-center" href="#">Ajouter au panier</a>
+                <a class="text-center" href="{{ path('add_cart', {'id' : product.id} ) }}">Ajouter au panier</a>
         </div>
     </div>
 
