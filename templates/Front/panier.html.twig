@@ -27,7 +27,7 @@
                                 <h2>{{ product.quantity }}</h2>
                             </div>
                             <div class="col-20">
-                                <a href="{{ path('delete_cart') }}" class="delete-product-cart">
+                                <a href="{{ path('delete_cart', {'id' : product.product.id}) }}" class="delete-product-cart">
                                     Supprimer
                                 </a>
                             </div>
