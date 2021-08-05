@@ -3,7 +3,9 @@
 {% block main %}
     <div class="container">
         {% if items == [] %}
-            <p>Panier vide</p>
+            <div class="cart-empty">
+                <p>Panier vide</p>
+            </div>
             {% else %}
                 {% set n = 0 %}
                 {% set p = 0 %}

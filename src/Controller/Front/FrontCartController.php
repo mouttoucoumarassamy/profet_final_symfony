@@ -27,7 +27,6 @@ class FrontCartController extends AbstractController
     public function indexCart(SessionInterface $session, ProductRepository $productRepository)
     {
         $panier = $session->get('panier', []);
-
         $panierWithData = [];
         foreach ($panier as $id => $quantity){
             $panierWithData[] = [
@@ -148,14 +147,19 @@ class FrontCartController extends AbstractController
                 $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
                 $product = $productRepository->find($prod);
                 $stock_begin = $product->getStock();
-                $stock_end = $stock_begin -1 ;
+                $stock_end = $stock_begin - $quantity ;
                 $product->setStock($stock_end);
                 $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $command->getId() .")";
                 $resultat = mysqli_query($connexionBdd, $requete);
                 mysqli_close($connexionBdd);
 
+
+                unset($panier[$prod]);
+                $session->set('panier', $panier);
+
                 $entityManager->persist($product);
                 $entityManager->flush();
+
             }
 
             return $this->redirectToRoute('card_infos');
@@ -189,17 +193,21 @@ class FrontCartController extends AbstractController
                 $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
                 $product = $productRepository->find($prod);
                 $stock_begin = $product->getStock();
-                $stock_end = $stock_begin -1 ;
+                $stock_end = $stock_begin - $quantity ;
                 $product->setStock($stock_end);
                 $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $command->getId() .")";
                 $resultat = mysqli_query($connexionBdd, $requete);
                 mysqli_close($connexionBdd);
 
+                unset($panier[$prod]);
+                $session->set('panier', $panier);
+
                 $entityManager->persist($command);
                 $entityManager->flush();
-            }
 
-            return $this->redirectToRoute('card_infos');
+
+            }
+            return $this->redirectToRoute('cart');
         }
 
     }

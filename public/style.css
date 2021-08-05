@@ -734,6 +734,18 @@ footer{
     font-size: 1.2em;
 }
 
+.cart-empty{
+    width: 60%;
+    margin: 5% 20%;
+    font-size: 2.8em;
+    font-weight: bold;
+    border: darkslateblue solid 5px;
+    border-radius: 20px;
+    background: lightseagreen;
+    padding: 5% 0%;
+    text-align: center;
+}
+
 
 
 
