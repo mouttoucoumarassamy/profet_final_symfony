@@ -66,6 +66,11 @@ class Product
      */
     private $media;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Command::class, inversedBy="product_amount")
+     */
+    private $product_amount;
+
 
     public function __construct()
     {
@@ -73,6 +78,7 @@ class Product
         $this->comments = new ArrayCollection();
         $this->commands = new ArrayCollection();
         $this->media = new ArrayCollection();
+        $this->product_amount = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -205,13 +211,13 @@ class Product
      */
     public function getCommands(): Collection
     {
-        return $this->Commands;
+        return $this->commands;
     }
 
     public function addCommand(Command $command): self
     {
-        if (!$this->Commands->contains($command)) {
-            $this->Commands[] = $command;
+        if (!$this->commands->contains($command)) {
+            $this->commands[] = $command;
         }
 
         return $this;
@@ -219,7 +225,7 @@ class Product
 
     public function removeCommand(Command $command): self
     {
-        $this->Commands->removeElement($command);
+        $this->commands->removeElement($command);
 
         return $this;
     }
@@ -250,6 +256,30 @@ class Product
                 $medium->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Command[]
+     */
+    public function getProductAmount(): Collection
+    {
+        return $this->product_amount;
+    }
+
+    public function addProductAmount(Command $productAmount): self
+    {
+        if (!$this->product_amount->contains($productAmount)) {
+            $this->product_amount[] = $productAmount;
+        }
+
+        return $this;
+    }
+
+    public function removeProductAmount(Command $productAmount): self
+    {
+        $this->product_amount->removeElement($productAmount);
 
         return $this;
     }

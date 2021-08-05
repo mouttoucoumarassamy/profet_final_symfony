@@ -10,6 +10,7 @@ use App\Repository\CommandRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PDO;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
@@ -100,7 +101,8 @@ class FrontCartController extends AbstractController
                              UserRepository $userRepository,
                              Request $request,
                              EntityManagerInterface $entityManager,
-                             CommandRepository $commandRepository)
+                             CommandRepository $commandRepository
+                             )
     {
         $panier = $session->get('panier', []);
         $p = 0;
@@ -140,6 +142,22 @@ class FrontCartController extends AbstractController
             $entityManager->persist($command);
             $entityManager->flush();
 
+
+            foreach ( $panier as $prod => $quantity){
+                $connexionBdd = mysqli_connect("localhost", "root", "root");
+                $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+                $product = $productRepository->find($prod);
+                $stock_begin = $product->getStock();
+                $stock_end = $stock_begin -1 ;
+                $product->setStock($stock_end);
+                $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $command->getId() .")";
+                $resultat = mysqli_query($connexionBdd, $requete);
+                mysqli_close($connexionBdd);
+
+                $entityManager->persist($product);
+                $entityManager->flush();
+            }
+
             return $this->redirectToRoute('card_infos');
         }else{
 
@@ -163,7 +181,24 @@ class FrontCartController extends AbstractController
 
             $entityManager->persist($command);
             $entityManager->flush();
-            
+
+
+
+            foreach ( $panier as $prod => $quantity){
+                $connexionBdd = mysqli_connect("localhost", "root", "root");
+                $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+                $product = $productRepository->find($prod);
+                $stock_begin = $product->getStock();
+                $stock_end = $stock_begin -1 ;
+                $product->setStock($stock_end);
+                $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $command->getId() .")";
+                $resultat = mysqli_query($connexionBdd, $requete);
+                mysqli_close($connexionBdd);
+
+                $entityManager->persist($command);
+                $entityManager->flush();
+            }
+
             return $this->redirectToRoute('card_infos');
         }
 
