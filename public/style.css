@@ -734,7 +734,16 @@ footer{
     font-size: 1.2em;
 }
 
-
+.cart-empty{
+    border: solid 5px darkslateblue;
+    border-radius: 20px;
+    background: darkseagreen;
+    width : 60%;
+    margin: 5% 20%;
+    padding: 5% 0%;
+    font-size: 3.5em;
+    text-align: center;
+}
 
 
 

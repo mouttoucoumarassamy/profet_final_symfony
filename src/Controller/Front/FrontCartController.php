@@ -223,4 +223,21 @@ class FrontCartController extends AbstractController
         return $this->render('Front/card_cart.html.twig', ['command' => $command]);
     }
 
+    /**
+     * @Route("/cart/mail/", name="mail")
+     */
+    public function mail(UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager)
+    {
+        $user = $this->getUser();
+        $user_mail = $user->getUserIdentifier();
+        $user_true = $userRepository->findBy(['email' => $user_mail]);
+
+        $user_true[0]->setCardName($request->request->get('name'));
+        $user_true[0]->setCardNumber($request->request->get('number'));
+
+        $entityManager->persist($user_true[0]);
+        $entityManager->flush();
+
+    }
+
 }

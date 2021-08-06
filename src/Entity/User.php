@@ -177,6 +177,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $zipcode;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $card_number;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $card_name;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -357,6 +367,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setZipcode(string $zipcode): self
     {
         $this->zipcode = $zipcode;
+
+        return $this;
+    }
+
+    public function getCardNumber(): ?string
+    {
+        return $this->card_number;
+    }
+
+    public function setCardNumber(string $card_number): self
+    {
+        $this->card_number = $card_number;
+
+        return $this;
+    }
+
+    public function getCardName(): ?string
+    {
+        return $this->card_name;
+    }
+
+    public function setCardName(?string $card_name): self
+    {
+        $this->card_name = $card_name;
 
         return $this;
     }
