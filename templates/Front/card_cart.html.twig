@@ -9,10 +9,10 @@
         </div>
         <form action="{{ path('mail') }}" class="form" method="post">
             <label for="name" class="label-media">Nom sur la carte</label>
-            <input type="text" placeholder="Roger Le Tavernier" class="input-product" name="name" {% if app.user %}{{ dump(app.user)}} {#{% if app.user.card_name is not null %}value="{{ app.user.card_name }}" {% endif %} #} {% endif %}>
+            <input type="text" placeholder="Roger Le Tavernier" class="input-product" name="name" {% if app.user %} {% if app.user.cardName is not null %}value="{{ app.user.cardName }}" {% endif %}  {% endif %}>
             <p class="line-1"></p>
             <label for="number" class="label-media">Numéro de la carte</label>
-            <input type="text" placeholder="1234 5678 9012 3456" class="input-product" name="number" {# {% if app.user %}{% if app.user.card_number is not null %}value="{{ app.user.card_number }}" {% endif %}{% endif %}v#} >
+            <input type="text" placeholder="1234 5678 9012 3456" class="input-product" name="number"  {% if app.user %}{% if app.user.cardNumber is not null %}value="{{ app.user.cardNumber }}" {% endif %}{% endif %} >
             <p class="line-2"></p>
             <label for="code" class="label-media">Code de sécurité</label>
             <input type="text" placeholder="12345" class="input-product" name="code">

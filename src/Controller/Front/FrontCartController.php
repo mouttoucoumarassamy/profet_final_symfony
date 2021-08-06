@@ -226,7 +226,11 @@ class FrontCartController extends AbstractController
     /**
      * @Route("/cart/mail/", name="mail")
      */
-    public function mail(UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager)
+    public function mail(UserRepository $userRepository,
+                         Request $request,
+                         EntityManagerInterface $entityManager,
+                         CommandRepository $commandRepository,
+                            \Swift_Mailer $mailer)
     {
         $user = $this->getUser();
         $user_mail = $user->getUserIdentifier();
@@ -237,6 +241,30 @@ class FrontCartController extends AbstractController
 
         $entityManager->persist($user_true[0]);
         $entityManager->flush();
+
+        $command = $commandRepository->findAll();
+        $count = count($command);
+        $command_one = $commandRepository->find($count);
+
+        $message = (new \Swift_Message('Nouveau contact'))
+            // On attribue l'expéditeur
+            ->setFrom('superamazon@smail.ciom')
+
+            // On attribue le destinataire
+            ->setTo($user_true[0]->getEmail())
+
+            // On crée le texte avec la vue
+            ->setBody(
+                $this->renderView(
+                    'Front/mail.html.twig', ['user' => $user_true[0], 'commande' => $command_one]
+                ),
+                'text/html'
+            );
+
+        $mailer->send($message);
+
+
+        return $this->redirectToRoute('front_home');
 
     }
 
