@@ -745,6 +745,12 @@ footer{
     text-align: center;
 }
 
+.line-1{
+    background: blue;
+    height: 1vh;
+    width: 100%;
+}
+
 
 
 

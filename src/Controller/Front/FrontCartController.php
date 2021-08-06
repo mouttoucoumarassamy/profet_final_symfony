@@ -235,7 +235,6 @@ class FrontCartController extends AbstractController
         $user = $this->getUser();
         $user_mail = $user->getUserIdentifier();
         $user_true = $userRepository->findBy(['email' => $user_mail]);
-
         $user_true[0]->setCardName($request->request->get('name'));
         $user_true[0]->setCardNumber($request->request->get('number'));
 
