@@ -132,6 +132,7 @@ class FrontCartController extends AbstractController
             $commandlist = count($commandall);
 
             $command = new Command();
+
             $number = $commandlist + 1;
             $command->setNumberOrder('Commd -' . $number );
             $command->setDate(new \DateTime("NOW"));
@@ -141,6 +142,7 @@ class FrontCartController extends AbstractController
             $entityManager->persist($command);
             $entityManager->flush();
 
+            $id = $command->getId();
 
             foreach ( $panier as $prod => $quantity){
                 $connexionBdd = mysqli_connect("localhost", "root", "root");
@@ -162,7 +164,7 @@ class FrontCartController extends AbstractController
 
             }
 
-            return $this->redirectToRoute('card_infos');
+            return $this->redirectToRoute('card_infos', ['id' => $id]);
         }else{
 
             $email = $request->request->get('email');
@@ -186,7 +188,7 @@ class FrontCartController extends AbstractController
             $entityManager->persist($command);
             $entityManager->flush();
 
-
+            $id = $command->getId();
 
             foreach ( $panier as $prod => $quantity){
                 $connexionBdd = mysqli_connect("localhost", "root", "root");
@@ -207,18 +209,18 @@ class FrontCartController extends AbstractController
 
 
             }
-            return $this->redirectToRoute('cart');
+            return $this->redirectToRoute('card_infos', ['id' => $id]);
         }
 
     }
 
     /**
-     * @Route("/cart/card/", name="card_infos")
+     * @Route("/cart/card/{id}", name="card_infos")
      */
-    public function cardInfos(SessionInterface $session)
+    public function cardInfos($id, SessionInterface $session, CommandRepository $commandRepository)
     {
-        $panier = $session->get('panier', []);
-        dd($panier);
+        $command = $commandRepository->find($id);
+        return $this->render('Front/card_cart.html.twig', ['command' => $command]);
     }
 
 }
