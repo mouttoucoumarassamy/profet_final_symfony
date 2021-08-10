@@ -67,8 +67,17 @@ class AdminCategoryController extends AbstractController
         $name = $request->request->get('name');
         $description = $request->request->get('description');
 
+        $dossier = 'img/media/';
+        $nom_fichier = $_FILES['image']['name'];
+        $fichier = $_FILES['image']['tmp_name'];
+        $type = $_FILES['image']['type'];
+        $dossier_image = $dossier . $nom_fichier;
+        move_uploaded_file($fichier, $dossier . $nom_fichier );
+        $src = $nom_fichier;
+
         $category->setName($name);
         $category->setDescription($description);
+        $category->setMedia($src);
 
         $entityManager->persist($category);
         $entityManager->flush();
@@ -102,8 +111,17 @@ class AdminCategoryController extends AbstractController
         $name = $request->request->get('name');
         $description = $request->request->get('description');
 
+        $dossier = 'img/media/';
+        $nom_fichier = $_FILES['image']['name'];
+        $fichier = $_FILES['image']['tmp_name'];
+        $type = $_FILES['image']['type'];
+        $dossier_image = $dossier . $nom_fichier;
+        move_uploaded_file($fichier, $dossier . $nom_fichier );
+        $src = $nom_fichier;
+
         $category->setName($name);
         $category->setDescription($description);
+        $category->setMedia($src);
 
         $entityManager->persist($category);
         $entityManager->flush();

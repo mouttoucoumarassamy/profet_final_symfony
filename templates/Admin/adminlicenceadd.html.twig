@@ -9,10 +9,11 @@
         <div class="row1 licence w95">
             <h1>Vous pouvez ajouter la licence</h1>
 
-            <form action="{{ path('admin_licence_add_save') }}" method="post" class="form">
+            <form action="{{ path('admin_licence_add_save') }}" method="post" class="form" enctype="multipart/form-data">
                 <input type="text" name="name" class="input-product" placeholder="Entrer le nom de la licence" >
                 <textarea name="description" id="description" cols="30" rows="10" class="input-product"></textarea>
-                </select>
+                <label class="label-media" for="fichier">Choisissez une image</label>
+                <input type="file" name="image" id="fichier" placeholder="Votre image" class="file">
                 <input type="submit" value="Ajouter" class="button-product">
             </form>
 

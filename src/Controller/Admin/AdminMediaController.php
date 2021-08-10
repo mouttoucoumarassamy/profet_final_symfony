@@ -77,7 +77,7 @@ class AdminMediaController extends AbstractController
         $entityManager->flush();
         $this->addFlash(
             'notice',
-            'Votre image est modifiée');
+            'Votre image est ajoutée');
 
         return $this->redirectToRoute('admin_list_medias');
     }
