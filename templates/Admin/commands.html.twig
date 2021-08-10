@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block main %}
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container">
+        {% for command in commands %}
+            <div class="comment-card">
+                <p class="comment-p">{{ command.numberOrder }}</p>
+                {% if command.user %}
+                    <p>Par {{ command.user.email }}</p>
+                    {% else %}
+                    <p>Par {{ command.email }}</p>
+                {% endif %}
+                    <p>Prix : {{ command.price }} €</p>
+                <p>Le {{ command.date | date('d-m-y') }}</p>
+                <p>Liste des produits :</p>
+                <ul>
+                    {% for product in command.products %}
+                        <li>{{ product.name }} {{ product.price }} €</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+        <div class="page">
+            {{ knp_pagination_render(commands) }}
+        </div>
+    </div>
+
+
+
+{% endblock %}
