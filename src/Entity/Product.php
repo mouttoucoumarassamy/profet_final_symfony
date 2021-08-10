@@ -36,13 +36,14 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id", onDelete="CASCADE")
+     *
      */
     private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity=Licence::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, name="licence_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $licence;
 
@@ -53,11 +54,13 @@ class Product
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="product")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $comments;
 
     /**
      * @ORM\ManyToMany(targetEntity=Command::class, inversedBy="products")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $commands;
 
@@ -66,10 +69,10 @@ class Product
      */
     private $media;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Command::class, inversedBy="product_amount")
-     */
-    private $product_amount;
+    ///**
+     //* @ORM\ManyToMany(targetEntity=Command::class, inversedBy="product_amount")
+     //*/
+    //private $product_amount;
 
 
     public function __construct()
@@ -78,7 +81,7 @@ class Product
         $this->comments = new ArrayCollection();
         $this->commands = new ArrayCollection();
         $this->media = new ArrayCollection();
-        $this->product_amount = new ArrayCollection();
+        //$this->product_amount = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -260,27 +263,27 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection|Command[]
-     */
-    public function getProductAmount(): Collection
-    {
-        return $this->product_amount;
-    }
+   // /**
+    // * @return Collection|Command[]
+     //*/
+   // public function getProductAmount(): Collection
+   // {
+     //   return $this->product_amount;
+    // }
 
-    public function addProductAmount(Command $productAmount): self
-    {
-        if (!$this->product_amount->contains($productAmount)) {
-            $this->product_amount[] = $productAmount;
-        }
+   // public function addProductAmount(Command $productAmount): self
+    //{
+      //  if (!$this->product_amount->contains($productAmount)) {
+        //    $this->product_amount[] = $productAmount;
+        //}
 
-        return $this;
-    }
+        //return $this;
+    //}
 
-    public function removeProductAmount(Command $productAmount): self
-    {
-        $this->product_amount->removeElement($productAmount);
+    //public function removeProductAmount(Command $productAmount): self
+    //{
+      //  $this->product_amount->removeElement($productAmount);
 
-        return $this;
-    }
+        //return $this;
+    //}
 }

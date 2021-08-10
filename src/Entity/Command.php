@@ -55,12 +55,6 @@ class Command
      */
     private $products;
 
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="product_amount")
-     */
-    private $product_amount;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -80,7 +74,6 @@ class Command
     public function __construct()
     {
         $this->products = new ArrayCollection();
-        $this->product_amount = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -223,29 +216,7 @@ class Command
         return $this;
     }
 
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProductAmount(): Collection
-    {
-        return $this->product_amount;
-    }
 
-    public function addProductAmount(Product $productAmount): self
-    {
-        if (!$this->product_amount->contains($productAmount)) {
-            $this->product_amount[] = $productAmount;
-        }
-
-        return $this;
-    }
-
-    public function removeProductAmount(Product $productAmount): self
-    {
-        $this->product_amount->removeElement($productAmount);
-
-        return $this;
-    }
 
 
 }

@@ -36,18 +36,14 @@ class Media
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="media")
+     * @ORM\JoinColumn(nullable=true, name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $product;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Licence::class, mappedBy="media")
-     */
-    private $licences;
 
 
     public function __construct()
     {
-        $this->licences = new ArrayCollection();
         $this->categories = new ArrayCollection();
     }
 
