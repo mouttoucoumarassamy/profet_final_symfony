@@ -38,5 +38,4 @@ class FrontHomeController extends AbstractController
         return $this->render('front/search.html.twig', ['products' => $products6, 'term' => $term]);
     }
 
-
 }

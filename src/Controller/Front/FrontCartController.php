@@ -233,34 +233,61 @@ class FrontCartController extends AbstractController
                             \Swift_Mailer $mailer)
     {
         $user = $this->getUser();
-        $user_mail = $user->getUserIdentifier();
-        $user_true = $userRepository->findBy(['email' => $user_mail]);
-        $user_true[0]->setCardName($request->request->get('name'));
-        $user_true[0]->setCardNumber($request->request->get('number'));
+        if ($user){
+            $user_mail = $user->getUserIdentifier();
+            $user_true = $userRepository->findBy(['email' => $user_mail]);
+            $user_true[0]->setCardName($request->request->get('name'));
+            $user_true[0]->setCardNumber($request->request->get('number'));
+            $entityManager->persist($user_true[0]);
+            $entityManager->flush();
+            $command = $commandRepository->findAll();
+            $count = count($command);
+            $command_one = $commandRepository->find($count);
 
-        $entityManager->persist($user_true[0]);
-        $entityManager->flush();
+            $message = (new \Swift_Message('Nouveau contact'))
+                // On attribue l'expéditeur
+                ->setFrom('superamazon@smail.ciom')
 
-        $command = $commandRepository->findAll();
-        $count = count($command);
-        $command_one = $commandRepository->find($count);
+                // On attribue le destinataire
+                ->setTo($user_true[0]->getEmail())
 
-        $message = (new \Swift_Message('Nouveau contact'))
-            // On attribue l'expéditeur
-            ->setFrom('superamazon@smail.ciom')
+                // On crée le texte avec la vue
+                ->setBody(
+                    $this->renderView(
+                        'Front/mail.html.twig', ['commande' => $command_one]
+                    ),
+                    'text/html'
+                );
 
-            // On attribue le destinataire
-            ->setTo($user_true[0]->getEmail())
+            $mailer->send($message);
+        }else{
+            $command = $commandRepository->findAll();
+            $count = count($command);
+            $command_one = $commandRepository->find($count);
+            $mail = $command_one->getEmail();
 
-            // On crée le texte avec la vue
-            ->setBody(
-                $this->renderView(
-                    'Front/mail.html.twig', ['user' => $user_true[0], 'commande' => $command_one]
-                ),
-                'text/html'
-            );
+            $message = (new \Swift_Message('Nouveau contact'))
+                // On attribue l'expéditeur
+                ->setFrom('superamazon@smail.ciom')
 
-        $mailer->send($message);
+                // On attribue le destinataire
+                ->setTo($mail)
+
+                // On crée le texte avec la vue
+                ->setBody(
+                    $this->renderView(
+                        'Front/mail.html.twig', ['command' => $command_one]
+                    ),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+        }
+
+
+
+
+
 
 
         return $this->redirectToRoute('front_home');

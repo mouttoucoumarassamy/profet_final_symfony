@@ -1,4 +1,4 @@
 <h1>Votre commande</h1>
-<p>Nom : {{user.name}} {{ user.firstname }}</p>
-<p>e-mail : {{user.email}}</p>
-<p>Montant : {{commande.price}} €</p>
+<p>Nom : {% if command.user %}{{command.user.name}} {{ command.user.firstname }}{% else %}{{ command.name }}{% endif %}</p>
+<p>e-mail : {% if command.user %}{{command.user.email}}{% else %}{{ command.email }}{% endif %}</p>
+<p>Montant : {{command.price}} €</p>
