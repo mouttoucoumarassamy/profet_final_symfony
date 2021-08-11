@@ -78,5 +78,13 @@ class FrontProductController extends AbstractController
         return $this->redirectToRoute('front_show_product', ['id' => $id]);
     }
 
+    public function productsAll(ProductRepository $productRepository)
+    {
+        $products = $productRepository->findAll();
+
+        return $this->render('front/_products_all.html.twig', [
+            'products' => $products
+        ]);
+    }
 
 }

@@ -52,7 +52,7 @@
                     {% set m = 0 %}
                 {% endif %}
             {% set note5 = m/2 %}
-            <p class="dislay-none">{{ note5 | number_format(0) }}</p>
+            <p class="display-none">{{ note5 | number_format(0) }}</p>
             <p class="note-product"></p>
                 <h4><a href="{{ path('front_categorie_show', {'id' : product.category.id}) }}">{{ product.category.name }}</a> -
                     <a href="{{ path('front_show_licence', {'id' : product.licence.id}) }}">{{ product.licence.name }}</a></h4>
@@ -96,7 +96,7 @@
 
 {% block script %}
     <script>
-        let note = document.querySelector(".dislay-none").innerHTML;
+        let note = document.querySelector(".display-none").innerHTML;
         let noteEtoile = document.querySelector(".note-product")
         console.log(note);
         let etoile = "&#9734;";

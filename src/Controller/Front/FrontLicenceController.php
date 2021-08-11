@@ -32,4 +32,13 @@ class FrontLicenceController extends AbstractController
         return $this->render("Front/licence.html.twig", ['licence' => $licence, 'id' => $id,
              "products" => $products6]);
     }
+
+    public function licencesAll(LicenceRepository $licenceRepository)
+    {
+        $licences = $licenceRepository->findAll();
+
+        return $this->render('front/_licences_all.html.twig', [
+            'licences' => $licences
+        ]);
+    }
 }

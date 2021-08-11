@@ -32,5 +32,14 @@ class FrontCategoryController extends AbstractController
         return $this->render('Front/category.html.twig', ['category' => $category]);
     }
 
+    public function categoriesAll(CategoryRepository $categoryRepository)
+    {
+        $categories = $categoryRepository->findAll();
+
+        return $this->render('front/_categories_all.html.twig', [
+            'categories' => $categories
+        ]);
+    }
+
 
 }

@@ -19,7 +19,7 @@
             </a>
         </div>
         <div class="search">{# path('front_search') #}
-            <form action="{{ path('front_search') }}" class="form" method="get">
+            <form action="{{ path('front_search') }}" class="form relative" method="get">
                 <input class="input" type="search" placeholder="Rechercher..." name="q" id="searchinput">
                 <input type="submit" class="button" value="Rechercher">
                 <div class="suggestions" id="suggestions"></div>
@@ -51,6 +51,20 @@
         </div>
     </div>
 </header>
+
+{#
+https://symfony.com/doc/3.4/templating/embedding_controllers.html
+avec la syntaxe de : https://stackoverflow.com/questions/45396501/how-to-embed-controllers-in-a-template-using-symfony-4-directory-structure
+#}
+<div class="display-none">
+    <ul>
+        {{ render(controller('App\\Controller\\Front\\FrontCategoryController::categoriesAll')) }}
+        {{ render(controller('App\\Controller\\Front\\FrontProductController::productsAll')) }}
+        {{ render(controller('App\\Controller\\Front\\FrontLicenceController::licencesAll')) }}
+    </ul>
+
+</div>
+
 
 <main class="main">
     {% block main %}
@@ -86,12 +100,29 @@
 </footer>
 
 <script>
-
+    let element = document.querySelectorAll('.element');
+    let elements = [];
+    console.log(element);
+    element.forEach(data => elements.push(data.innerHTML));
+    console.log(elements);
     const searchinput = document.getElementById('searchinput');
     searchinput.addEventListener('keyup', function (){
         const input = searchinput.value;
         console.log(input);
+        const result = elements.filter(item => item.toLocaleLowerCase().includes(input.toLocaleLowerCase()));
+        console.log(result);
+        let suggestion = '';
+        if(input != ''){
+            result.forEach(resultItem =>
+                suggestion +=`
+        <div class="suggestion">${resultItem}</div>
+        `)
+        }
+            document.getElementById('suggestions').innerHTML = suggestion;
+
+
     })
+
 </script>
 {% block script %}
 {% endblock %}
