@@ -536,8 +536,9 @@ footer{
  }
 
  .note-product{
-     width: 20%;
-     margin: 0% 40%;
+     width: 50%;
+     margin: 0% 25%;
+     padding: 0%;
      font-size: 1.8em;
      text-align: center;
      color: royalblue;
@@ -851,6 +852,31 @@ li{
     .basket img{
         width: 25%;
         height: auto;
+    }
+
+    .card-media{
+        width : 100%;
+    }
+
+    .card-product{
+        width: 100%;
+        text-align: center;
+    }
+
+    .commente-publish{
+        flex-direction: column;
+    }
+
+    .commente-publish form{
+        width: 100%;
+        margin-bottom: 2%;
+    }
+
+    .commente-publish label{
+        display: none;
+    }
+    .commente-publish input{
+        width: 50%;
     }
 }
 

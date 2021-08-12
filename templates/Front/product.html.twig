@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block main %}
-    <div class="container-product d-flex justify-content-around">
+    <div class="container-product d-lg-flex justify-content-around">
         <div class="card-media">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -53,7 +53,7 @@
                 {% endif %}
             {% set note5 = m/2 %}
             <p class="display-none-note">{{ note5 | number_format(0) }}</p>
-            <p class="note-product"></p>
+            <div class="note-product"></div>
                 <h4><a href="{{ path('front_categorie_show', {'id' : product.category.id}) }}">{{ product.category.name }}</a> -
                     <a href="{{ path('front_show_licence', {'id' : product.licence.id}) }}">{{ product.licence.name }}</a></h4>
                 <h2 >{{ product.price }} €</h2>
