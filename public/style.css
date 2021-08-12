@@ -878,6 +878,16 @@ li{
     .commente-publish input{
         width: 50%;
     }
+
+    .card{
+        width : 90% !important;
+        display: block;
+        margin: 1% 5%;
+    }
+
+    .br img {
+        display: none;
+    }
 }
 
 
