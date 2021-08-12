@@ -776,6 +776,10 @@ li{
     background-color: rgba(203, 52, 3, 0.6);
 }
 
+.suggestion{
+    cursor: pointer;
+}
+
 
 
 

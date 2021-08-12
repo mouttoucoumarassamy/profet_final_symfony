@@ -102,26 +102,29 @@ avec la syntaxe de : https://stackoverflow.com/questions/45396501/how-to-embed-c
 <script>
     let element = document.querySelectorAll('.element');
     let elements = [];
-    console.log(element);
+    let suggestions = document.querySelectorAll(".suggestion");
     element.forEach(data => elements.push(data.innerHTML));
-    console.log(elements);
     const searchinput = document.getElementById('searchinput');
     searchinput.addEventListener('keyup', function (){
         const input = searchinput.value;
-        console.log(input);
         const result = elements.filter(item => item.toLocaleLowerCase().includes(input.toLocaleLowerCase()));
-        console.log(result);
         let suggestion = '';
         if(input != ''){
             result.forEach(resultItem =>
                 suggestion +=`
-        <div class="suggestion">${resultItem}</div>
+        <div class="suggestion" onclick="choice('${resultItem}')">${resultItem}</div>
         `)
         }
             document.getElementById('suggestions').innerHTML = suggestion;
-
-
     })
+
+    function choice(data)
+    {
+        document.getElementById('searchinput').value = data;
+    }
+
+
+
 
 </script>
 {% block script %}
