@@ -41,8 +41,10 @@ class FrontProductController extends AbstractController
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->handleRequest($request);
         $user = $this->getUser();
-        $user_mail = $user->getUserIdentifier();
-        $user_true = $userRepository->findBy(['email' => $user_mail]);
+        if($user){
+            $user_mail = $user->getUserIdentifier();
+            $user_true = $userRepository->findBy(['email' => $user_mail]);
+        }
 
         $note = new Note();
         $noteForm = $this->createForm(NoteType::class, $note);
@@ -72,7 +74,7 @@ class FrontProductController extends AbstractController
             'commentForm' => $commentForm->createView(),
             'noteForm' =>$noteForm->createView()]);
     }
-    
+
 
     public function productsAll(ProductRepository $productRepository)
     {
