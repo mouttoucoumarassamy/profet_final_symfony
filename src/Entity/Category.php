@@ -24,6 +24,11 @@ class Category
      */
     private $name;
 
+    // Register Magic Method to Print the name of the State e.g California
+    public function __toString() {
+        return $this->name;
+    }
+
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
      */
@@ -38,6 +43,9 @@ class Category
      * @ORM\Column(type="string", length=255)
      */
     private $media;
+
+
+
 
     public function __construct()
     {

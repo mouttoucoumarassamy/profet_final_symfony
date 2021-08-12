@@ -24,6 +24,10 @@ class Licence
      */
     private $name;
 
+    public function __toString() {
+        return $this->name;
+    }
+
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="licence")
      */

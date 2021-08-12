@@ -2,20 +2,18 @@
 
 namespace App\Form;
 
-use App\Entity\Comment;
-use Doctrine\DBAL\Types\DateType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Note;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CommentType extends AbstractType
+class NoteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content')
+            ->add('note')
             ->add('submit', SubmitType::class)
         ;
     }
@@ -23,7 +21,7 @@ class CommentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Comment::class,
+            'data_class' => Note::class,
         ]);
     }
 }

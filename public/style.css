@@ -780,6 +780,10 @@ li{
     cursor: pointer;
 }
 
+.display-none-note{
+    display: none;
+}
+
 
 
 
