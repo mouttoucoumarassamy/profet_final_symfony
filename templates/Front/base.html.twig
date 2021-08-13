@@ -46,18 +46,18 @@
                 </a>
             </div>
         </div>
-        <div class="menu">
-            <ul>
-                <li class="hamburger"></li>
-                <li class="hamburger"></li>
-                <li class="hamburger"></li>
+        <div class="menuh">
+            <ul class="menuhamburger" id="menuhamburger">
+                <li class="hambur" id="ham1"></li>
+                <li class="hambur" id="ham2"></li>
+                <li class="hambur" id="ham3"></li>
             </ul>
         </div>
         <div class="basket">
             <a href="{{ path('cart') }}"><img src="{{ asset('img/logo/panier.png') }}" alt="panier" class="cart"></a>{# path('front_basket') #}
         </div>
     </div>
-    <div class="sidebar">
+    <div class="sidebarh" id="sidebarh">
         <a href="{{ path('front_categories_list') }}">Catégories</a>
         <a href="{{  path('front_list_licence') }}">Licences</a>
         <a href="{{ path('app_login') }}">
@@ -118,6 +118,13 @@ avec la syntaxe de : https://stackoverflow.com/questions/45396501/how-to-embed-c
 </footer>
 
 <script>
+    let menu = document.getElementById('menuhamburger');
+    let sidebar = document.getElementById('sidebarh')
+    let h1 = document.getElementById("ham1");
+    let h2 = document.getElementById("ham2");
+    let h3 = document.getElementById("ham3");
+    let main = document.querySelector("main");
+    let footer = document.querySelector("footer");
     let element = document.querySelectorAll('.element');
     let elements = [];
     let suggestions = document.querySelectorAll(".suggestion");
@@ -140,6 +147,22 @@ avec la syntaxe de : https://stackoverflow.com/questions/45396501/how-to-embed-c
     {
         document.getElementById('searchinput').value = data;
     }
+
+    menu.addEventListener('click', () => {
+        console.log(sidebar.style.display)
+        if(sidebar.style.display === "none" || sidebar.style.display === ""){
+            sidebar.style.display = "flex";
+            h1.style.transform = "rotate(45deg) translateY(13px)";
+            h2.style.opacity = "0";
+            h3.style.transform = "rotate(-45deg) translateY(-13px)";
+        }else{
+            sidebar.style.display = "none";
+            h1.style.transform = "rotate(0) translateY(0)";
+            h2.style.opacity = "1";
+            h3.style.transform = "rotate(0) translateY(0)";
+        }
+
+    })
 </script>
 {% block script %}
 {% endblock %}

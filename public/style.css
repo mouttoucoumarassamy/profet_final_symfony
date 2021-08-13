@@ -789,11 +789,11 @@ li{
     display: none;
 }
 
-.sidebar{
+.sidebarh{
     display: none
 }
 
-.menu{
+.menuh{
     display: none
 }
 
@@ -824,19 +824,24 @@ li{
         width: 0%;
     }
 
-    .menu{
+    .menuh{
         display: initial;
         width: 50%;
     }
 
-    .hamburger{
+    .hambur{
         background-color: white;
+        margin-top: 9%;
+        width : 100%;
+        height: 5px;
+        text-align: center;
+    }
+
+    .menuhamburger{
+        cursor: pointer;
         margin-top: 2%;
         margin-left: 50%;
         width : 20%;
-        height: 5px;
-        cursor: pointer;
-        text-align: center;
     }
 
     .search{
@@ -854,6 +859,11 @@ li{
 
     .card-media{
         width : 100%;
+    }
+
+    .container-product{
+        width: 90%;
+        margin: 0 5%;
     }
 
     .card-product{
@@ -887,8 +897,7 @@ li{
         display: none;
     }
 
-    .sidebar{
-        display: flex;
+    .sidebarh{
         justify-content: space-around;
         flex-direction: column;
         text-align: center;
@@ -898,9 +907,10 @@ li{
         top : 100%;
         width : 100%;
         height: 30vh;
+        z-index: 1000000000000000000000000000000000000000000000000000000000000000000;
     }
 
-    .sidebar a{
+    .sidebarh a{
         color: white;
         text-decoration: none;
         font-size: 1.8em;
@@ -913,6 +923,8 @@ li{
     .w20{
         width: 20%;
     }
+
+
 
 
 }
