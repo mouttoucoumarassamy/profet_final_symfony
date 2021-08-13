@@ -924,6 +924,44 @@ li{
         width: 20%;
     }
 
+    .footer{
+        justify-content: space-around;
+        flex-direction: column;
+    }
+
+    .footer :nth-child(1) {
+        order: 3;
+    }
+
+    .footer div{
+        width: 100%;
+    }
+
+    .social ul{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .social li{
+        text-align: center;
+    }
+
+    .social img{
+        width : 60%;
+    }
+
+    .alea{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .alea .col{
+        width: 35%;
+    }
+
+
+
+
 
 
 
