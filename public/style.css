@@ -789,10 +789,19 @@ li{
     display: none;
 }
 
+.sidebar{
+    display: none
+}
+
+.menu{
+    display: none
+}
+
 @media screen and (max-width: 800px) {
 
     .search{
         display: none;
+        width: 0%;
     }
 
     .categories a{
@@ -810,35 +819,24 @@ li{
         display: none
     }
 
-    .categories{
-        background-color: white;
-        margin-top: 1%;
-        width : 50%;
-        height: 5px;
-        cursor: pointer;
-    }
-
-    .licences{
-        background-color: white;
-        margin-top: 1%;
-        width : 50%;
-        height: 5px;
-        cursor: pointer;
-    }
-
-    .log{
-        background-color: white;
-        margin-top: 1%;
-        width : 50%;
-        height: 5px;
-        cursor: pointer;
-    }
-
     .w40 {
-        flex-direction: column;
+        display: none;
+        width: 0%;
+    }
+
+    .menu{
+        display: initial;
+        width: 50%;
+    }
+
+    .hamburger{
+        background-color: white;
+        margin-top: 2%;
+        margin-left: 50%;
         width : 20%;
-        margin-left: 35%;
+        height: 5px;
         cursor: pointer;
+        text-align: center;
     }
 
     .search{
@@ -888,6 +886,35 @@ li{
     .br img {
         display: none;
     }
+
+    .sidebar{
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        text-align: center;
+        background-color: navy;
+        position: absolute;
+        left: 0;
+        top : 100%;
+        width : 100%;
+        height: 30vh;
+    }
+
+    .sidebar a{
+        color: white;
+        text-decoration: none;
+        font-size: 1.8em;
+    }
+
+    header{
+        position: relative;
+    }
+
+    .w20{
+        width: 20%;
+    }
+
+
 }
 
 

@@ -46,10 +46,27 @@
                 </a>
             </div>
         </div>
+        <div class="menu">
+            <ul>
+                <li class="hamburger"></li>
+                <li class="hamburger"></li>
+                <li class="hamburger"></li>
+            </ul>
+        </div>
         <div class="basket">
             <a href="{{ path('cart') }}"><img src="{{ asset('img/logo/panier.png') }}" alt="panier" class="cart"></a>{# path('front_basket') #}
         </div>
-
+    </div>
+    <div class="sidebar">
+        <a href="{{ path('front_categories_list') }}">Catégories</a>
+        <a href="{{  path('front_list_licence') }}">Licences</a>
+        <a href="{{ path('app_login') }}">
+            {% if app.user %}
+                {{ app.user.firstname }} {{ app.user.name  }}
+            {% endif %}
+            {% if app.user is null %}
+                Se connecter/S'inscrire
+            {% endif %}</a>
     </div>
 </header>
 
