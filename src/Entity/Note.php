@@ -22,6 +22,13 @@ class Note
      */
     private $note;
 
+    // @Assert\NotBlank(message="Veuillez remplir le contenue du commentaire")
+    //  @Assert\Length(
+    //      min = 1,
+    //      max = 2,
+    //      minMessage="Votre note doit être comprise entre 0 et 10.",
+    //     maxMessage="Votre note doit être comprise entre 0 et 10"
+
     /**
      * @ORM\Column(type="date")
      */
