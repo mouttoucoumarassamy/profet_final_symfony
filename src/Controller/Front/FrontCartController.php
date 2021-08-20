@@ -243,7 +243,6 @@ class FrontCartController extends AbstractController
             $command = $commandRepository->findAll();
             $count = count($command);
             $command_one = $commandRepository->find($count);
-
             $message = (new \Swift_Message('Nouveau contact'))
                 // On attribue l'expéditeur
                 ->setFrom('superamazon@smail.ciom')
@@ -254,7 +253,7 @@ class FrontCartController extends AbstractController
                 // On crée le texte avec la vue
                 ->setBody(
                     $this->renderView(
-                        'Front/mail.html.twig', ['commande' => $command_one]
+                        'Front/mail.html.twig', ['command' => $command_one]
                     ),
                     'text/html'
                 );
@@ -264,6 +263,7 @@ class FrontCartController extends AbstractController
             $command = $commandRepository->findAll();
             $count = count($command);
             $command_one = $commandRepository->find($count);
+
             $mail = $command_one->getEmail();
 
             $message = (new \Swift_Message('Nouveau contact'))
