@@ -9,7 +9,10 @@
         <div class="row1 licence w95">
             <h1>Vous pouvez rajouter un produit</h1>
 
-            <form action="{{ path('admin_product_save_add') }}" method="post" class="form">
+           {#
+
+
+           <form action="{{ path('admin_product_save_add') }}" method="post" class="form">
                 <input type="text" name="name" class="input-product" placeholder="Entrer le nom du produit">
                 <input type="text" name="price" class="input-product" placeholder="Entrer le prix du produit" >
                 <input type="text" name="stock" class="input-product" placeholder="Entrer le nombre d'exemplaires du produit">
@@ -44,9 +47,38 @@
                 <input type="submit" value="Ajouter" class="button-product">
             </form>
 
+           #}
 
+            {{ form_start(productForm) }}
+                {{ form_label(productForm.name, 'Nom du produit :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+                {{ form_widget(productForm.name, {'attr' : {'class'  : 'input-product', 'placeholder' : 'Entrer le nom du produit'}}) }}
+                {{ form_label(productForm.price, 'Prix du produit :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+                {{ form_widget(productForm.price, {'attr' : {'class'  : 'input-product', 'placeholder' : 'Entrer le prix du produit'}} ) }}
+                {{ form_label(productForm.stock, 'Stock du produit :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+                {{ form_widget(productForm.stock, {'attr' : {'class'  : 'input-product', 'placeholder' : 'Entrer la quantité du produit'}} ) }}
+                {{ form_label(productForm.category, 'Catégorie du produit :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+                {{ form_widget(productForm.category, {'attr' : {'class'  : 'input-product', 'placeholder' : 'Choisir la catégorie'}} ) }}
+                {{ form_label(productForm.licence, 'Licence du produit :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+                {{ form_widget(productForm.licence, {'attr' : {'class'  : 'input-product', 'placeholder' : 'Choisir la licence'}} ) }}
+                {{ form_label(productForm.media, 'Image(s) du produit :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+                {{ form_widget(productForm.media, {'attr' : {'class'  : 'input-product media-js', 'name' : 'media'}} ) }}
+                {{ form_widget(productForm.submit, {'attr' : {'class'  : 'button-product'}, 'value': 'Enregister'}) }}
+            </div>
 
-
+            {{ form_end(productForm) }}
         </div>
     </div>
+    <style>
+        label img{
+            width : 100px;
+            height: auto;
+        }
+        .under{
+            text-decoration: underline;
+        }
+    </style>
 {% endblock main %}
+
+{% block script %}
+    <script src="{{ asset('index.js') }}"></script>
+{% endblock %}
