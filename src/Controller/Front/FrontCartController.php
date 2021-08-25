@@ -283,13 +283,6 @@ class FrontCartController extends AbstractController
 
             $mailer->send($message);
         }
-
-
-
-
-
-
-
         return $this->redirectToRoute('front_home');
 
     }
