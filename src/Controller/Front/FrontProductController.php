@@ -36,10 +36,10 @@ class FrontProductController extends AbstractController
      */
     public function showProduct(ProductRepository $productRepository, $id, Request $request, EntityManagerInterface  $entityManager, UserRepository $userRepository)
     {
+        // On récupèr ele produit via son id
         $product = $productRepository->find($id);
-        $comment = new Comment;
-        $commentForm = $this->createForm(CommentType::class, $comment);
-        $commentForm->handleRequest($request);
+
+
         $user = $this->getUser();
         if($user){
             $user_mail = $user->getUserIdentifier();
@@ -59,6 +59,10 @@ class FrontProductController extends AbstractController
 
             return $this->redirectToRoute('front_show_product', ['id' => $id]);
         }
+
+        $comment = new Comment;
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
 
         if($commentForm->isSubmitted() && $commentForm->isValid()){
             $comment->setDate(new \DateTime("NOW"));

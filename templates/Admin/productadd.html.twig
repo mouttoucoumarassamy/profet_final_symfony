@@ -62,7 +62,7 @@
                 {{ form_widget(productForm.licence, {'attr' : {'class'  : 'input-product', 'placeholder' : 'Choisir la licence'}} ) }}
                 {{ form_label(productForm.media, 'Image(s) du produit :', {'label_attr' : {'class'  : 'input-product under'}}) }}
                 {{ form_widget(productForm.media, {'attr' : {'class'  : 'input-product media-js', 'name' : 'media'}} ) }}
-                {{ form_widget(productForm.submit, {'attr' : {'class'  : 'button-product'}, 'value': 'Enregister'}) }}
+                {{ form_widget(productForm.submit, {'attr' : {'class'  : 'button-product', 'value' : 'Enregister'}} ) }}
             </div>
 
             {{ form_end(productForm) }}
