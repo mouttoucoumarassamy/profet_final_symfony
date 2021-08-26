@@ -41,6 +41,7 @@ class FrontProductController extends AbstractController
 
 
         $user = $this->getUser();
+
         if($user){
             $user_mail = $user->getUserIdentifier();
             $user_true = $userRepository->findBy(['email' => $user_mail]);
@@ -60,7 +61,7 @@ class FrontProductController extends AbstractController
             return $this->redirectToRoute('front_show_product', ['id' => $id]);
         }
 
-        $comment = new Comment;
+        $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->handleRequest($request);
 
