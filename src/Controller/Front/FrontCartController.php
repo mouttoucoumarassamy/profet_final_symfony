@@ -95,7 +95,7 @@ class FrontCartController extends AbstractController
     /**
      * @Route("/command/info/", name="info_command")
      */
-    public function infoCard(SessionInterface $session,
+    public function infoCommand(SessionInterface $session,
                              ProductRepository $productRepository,
                              UserRepository $userRepository,
                              Request $request,
