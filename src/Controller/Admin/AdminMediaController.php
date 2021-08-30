@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 
 
 use App\Entity\Media;
+use App\Form\MediaType;
 use App\Repository\MediaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -41,73 +42,77 @@ class AdminMediaController extends AbstractController
     /**
      * @Route("/admin/media/update/{id}", name="admin_update_media")
      */
-    public function updateMedia($id, MediaRepository $mediaRepository)
+    public function updateMedia($id, MediaRepository $mediaRepository, Request $request, EntityManagerInterface $entityManager)
     {
         $media = $mediaRepository->find($id);
-        return $this->render('admin/updatemedia.html.twig', ['media' => $media]);
+        $mediaForm = $this->createForm(MediaType::class, $media);
+        $mediaForm->handleRequest($request);
+
+        if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
+            $imageFile = $mediaForm->get('src')->getData();
+            if ($imageFile) {
+                $dossier = 'img/media/';
+                $nom_fichier = $_FILES['media']['name']['src'];
+                $fichier = $_FILES['media']['tmp_name']['src'];
+                $type = $_FILES['media']['type']['src'];
+                $dossier_image = $dossier . $nom_fichier;
+                move_uploaded_file($fichier, $dossier . $nom_fichier );
+                $media->setSRC($nom_fichier);
+                $title = $media->getTitle();
+                $media->setAlt($title);
+                // Enregistrement des données via $entityManager dans la BDD
+                $entityManager->persist($media);
+                $entityManager->flush();
+                // Message qui confirme l'action à l'utlisateur
+                $this->addFlash(
+                    'notice',
+                    'Votre image est modifiée');
+
+                // Redirection vers la page qui liste tous les produits
+                return $this->redirectToRoute('admin_list_medias');
+            }
+
+        }
+        return $this->render('admin/addmedia.html.twig', [
+            'mediaForm' => $mediaForm->createView()]);
     }
 
     /**
      * @Route("/admin/media/add/", name="admin_media_add")
      */
-    public function addMedia()
-    {
-        return $this->render('admin/addmedia.html.twig');
-    }
-
-    /**
-     * @Route("/admin/media/add/save/", name="admin_media_add_save")
-     */
     public function addSaveMedia(EntityManagerInterface $entityManager, Request $request)
     {
-        $dossier = 'img/media/';
-        $nom_fichier = $_FILES['image']['name'];
-        $fichier = $_FILES['image']['tmp_name'];
-        $type = $_FILES['image']['type'];
-        $dossier_image = $dossier . $nom_fichier;
-        move_uploaded_file($fichier, $dossier . $nom_fichier );
-        $title = $request->request->get('title');
-        $src = $nom_fichier;
+
         $media = new Media();
-        $media->setTitle($title);
-        $media->setSrc($src);
-        $media->setAlt($title);
+        $mediaForm = $this->createForm(MediaType::class, $media);
+        $mediaForm->handleRequest($request);
 
-        $entityManager->persist($media);
-        $entityManager->flush();
-        $this->addFlash(
-            'notice',
-            'Votre image est ajoutée');
+        if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
+            $imageFile = $mediaForm->get('src')->getData();
+            if ($imageFile) {
+                $dossier = 'img/media/';
+                $nom_fichier = $_FILES['media']['name']['src'];
+                $fichier = $_FILES['media']['tmp_name']['src'];
+                $type = $_FILES['media']['type']['src'];
+                $dossier_image = $dossier . $nom_fichier;
+                move_uploaded_file($fichier, $dossier . $nom_fichier );
+                $media->setSRC($nom_fichier);
+                $title = $media->getTitle();
+                $media->setAlt($title);
+                // Enregistrement des données via $entityManager dans la BDD
+                $entityManager->persist($media);
+                $entityManager->flush();
+                // Message qui confirme l'action à l'utlisateur
+                $this->addFlash(
+                    'notice',
+                    'Votre image est ajoutée');
 
-        return $this->redirectToRoute('admin_list_medias');
+                // Redirection vers la page qui liste tous les produits
+                return $this->redirectToRoute('admin_list_medias');
+            }
+
+        }
+        return $this->render('admin/addmedia.html.twig', [
+            'mediaForm' => $mediaForm->createView()]);
     }
-
-    /**
-     * @Route("/admin/media/update/save/{id}", name="admin_media_update_save")
-     */
-    public function addUpdateSaveMedia($id,EntityManagerInterface $entityManager, Request $request, MediaRepository $mediaRepository)
-    {
-        $dossier = 'img/media/';
-        $nom_fichier = $_FILES['image']['name'];
-        $fichier = $_FILES['image']['tmp_name'];
-        $type = $_FILES['image']['type'];
-        $dossier_image = $dossier . $nom_fichier;
-        move_uploaded_file($fichier, $dossier . $nom_fichier );
-        $title = $request->request->get('title');
-        $src = $nom_fichier;
-        $media = $mediaRepository->find($id);
-        $media->setTitle($title);
-        $media->setSrc($src);
-        $media->setAlt($title);
-
-        $entityManager->persist($media);
-        $entityManager->flush();
-        $this->addFlash(
-            'notice',
-            'Votre image est modifiée');
-
-        return $this->redirectToRoute('admin_list_medias');
-    }
-
-
 }

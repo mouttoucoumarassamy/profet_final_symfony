@@ -91,7 +91,7 @@ class AdminLicenceController extends AbstractController
      */
     public function licenceAdd(Request $request, EntityManagerInterface $entityManager)
     {
-        $licence = new licence();
+        $licence = new Licence();
         $licenceForm = $this->createForm(LicenceType::class, $licence);
 
         $licenceForm->handleRequest($request);

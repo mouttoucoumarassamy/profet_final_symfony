@@ -9,12 +9,14 @@
         <div class="row1 licence w95">
             <h1>Vous pouvez ajouter une image</h1>
 
-            <form action="{{ path('admin_media_add_save') }}" method="post" class="form" enctype="multipart/form-data">
-                <input type="text" name="title" class="input-product" placeholder="Entrer le titre de l'image" >
-                <label class="label-media" for="fichier">Choisissez une image</label>
-                <input type="file" name="image" id="fichier" placeholder="Votre image" class="file">
-                <input type="submit" value="Ajouter" class="button-product">
-            </form>
+            {{ form_start(mediaForm) }}
+            {{ form_label(mediaForm.title, 'Titre de l\'image :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+            {{ form_widget(mediaForm.title, {'attr' : {'class'  : 'input-product', 'placeholder' : 'Entrer le nom de la licence'}}) }}
+            {{ form_label(mediaForm.src, 'Fichier de l\'image :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+            {{ form_widget(mediaForm.src, {'attr' : {'class'  : 'input-product media-js', 'name' : 'src'}} ) }}
+            {{ form_widget(mediaForm.submit, {'attr' : {'class'  : 'button-product', 'value' : 'Enregister'}} ) }}
+            {{ form_end(mediaForm) }}
+
         </div>
     </div>
 {% endblock main %}
