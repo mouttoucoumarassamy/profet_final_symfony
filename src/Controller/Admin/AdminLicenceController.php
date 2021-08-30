@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 
 
 use App\Entity\Licence;
-use App\Entity\Media;
 use App\Form\LicenceType;
 use App\Repository\LicenceRepository;
 use Doctrine\ORM\EntityManagerInterface;
