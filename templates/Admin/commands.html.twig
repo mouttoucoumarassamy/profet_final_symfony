@@ -23,7 +23,7 @@
                         <ul>
                             {% for product in command.products %}
                                 {% if card.product_id == product.id %}
-                                    <li>{{ product.name }} {{ product.price }} € ===> Nombre d'exemplaire(s) {{ card.product_amount }}</li>
+                                    <li>{{ product.name }} {{ product.price }} € ===> Nombre d'exemplaire(s) : {{ card.product_amount }}</li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
