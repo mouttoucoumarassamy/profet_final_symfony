@@ -176,7 +176,7 @@ class FrontCartController extends AbstractController
                 $resultat2 = mysqli_query($connexionBdd, $requete2);
                 mysqli_close($connexionBdd);
 
-
+                // On vide le panier
                 unset($panier[$prod]);
                 $session->set('panier', $panier);
 
@@ -234,7 +234,7 @@ class FrontCartController extends AbstractController
                 $resultat2 = mysqli_query($connexionBdd, $requete2);
                 mysqli_close($connexionBdd);
 
-
+                // On vide le panier
                 unset($panier[$prod]);
                 $session->set('panier', $panier);
 
