@@ -45,8 +45,6 @@ class Category
     private $media;
 
 
-
-
     public function __construct()
     {
         $this->products = new ArrayCollection();

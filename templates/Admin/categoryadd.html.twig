@@ -9,17 +9,15 @@
         <div class="row1 licence w95">
             <h1>Vous pouvez ajouter la catégorie</h1>
 
-            <form action="{{ path('admin_category_add_save') }}" method="post" class="form" enctype="multipart/form-data">
-                <input type="text" name="name" class="input-product" placeholder="Entrer le nom de la catégorie" >
-                <textarea name="description" id="description" cols="30" rows="10" class="input-product" placeholder="Entrer la description de la catégorie"></textarea>
-                <label class="label-media" for="fichier">Choisissez une image</label>
-                <input type="file" name="image" id="fichier" placeholder="Votre image" class="file">
-                <input type="submit" value="Ajouter" class="button-product">
-            </form>
-
-
-
-
+            {{ form_start(categoryForm) }}
+                {{ form_label(categoryForm.name, 'Nom de la catégorie :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+                {{ form_widget(categoryForm.name, {'attr' : {'class'  : 'input-product', 'placeholder' : 'Entrer le nom de la catégorie'}}) }}
+                {{ form_label(categoryForm.description, 'Description de la catégorie :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+                {{ form_widget(categoryForm.description, {'attr' : {'class'  : 'input-product', 'placeholder' : 'Entrer la description de la catégorie'}} ) }}
+                {{ form_label(categoryForm.media, 'Image de la catégorie :', {'label_attr' : {'class'  : 'input-product under'}}) }}
+                {{ form_widget(categoryForm.media, {'attr' : {'class'  : 'input-product media-js', 'name' : 'media'}} ) }}
+                {{ form_widget(categoryForm.submit, {'attr' : {'class'  : 'button-product', 'value' : 'Enregister'}} ) }}
+            {{ form_end(categoryForm) }}
         </div>
     </div>
 {% endblock main %}

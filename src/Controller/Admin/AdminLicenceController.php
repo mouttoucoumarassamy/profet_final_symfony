@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Licence;
 use App\Entity\Media;
+use App\Form\LicenceType;
 use App\Repository\LicenceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -18,7 +19,7 @@ class AdminLicenceController extends AbstractController
     /**
      * @Route("/admin/licences/", name="admin_list_licences")
      */
-    public function listCategory(LicenceRepository $licenceRepository, PaginatorInterface $paginator, Request $request)
+    public function listlicence(LicenceRepository $licenceRepository, PaginatorInterface $paginator, Request $request)
     {
         $licences = $licenceRepository->findAll();
         $licences6 = $paginator->paginate($licences, $request->query->getInt('page', 1), 6);
@@ -44,94 +45,85 @@ class AdminLicenceController extends AbstractController
      * @Route("/admin/licence/update/{id}", name="admin_licence_update")
      */
     public function licenceUpdate($id,
-                                   LicenceRepository $licenceRepository
+                                   LicenceRepository $licenceRepository,
+                                    Request $request,
+                                    EntityManagerInterface $entityManager
     )
     {
         $licence = $licenceRepository->find($id);
 
-        return $this->render('admin/licenceupdate.html.twig', [
-            'licence' => $licence]);
+        $licenceForm = $this->createForm(LicenceType::class, $licence);
+
+        $licenceForm->handleRequest($request);
+
+        if ($licenceForm->isSubmitted() && $licenceForm->isValid()) {
+            $imageFile = $licenceForm->get('media')->getData();
+            if ($imageFile) {
+                $dossier = 'img/media/';
+                $nom_fichier = $_FILES['licence']['name']['media'];
+                $fichier = $_FILES['licence']['tmp_name']['media'];
+                $type = $_FILES['licence']['type']['media'];
+                $dossier_image = $dossier . $nom_fichier;
+                move_uploaded_file($fichier, $dossier . $nom_fichier);
+                $licence->setMedia($nom_fichier);
+
+                // Enregistrement des données via $entityManager dans la BDD
+                $entityManager->persist($licence);
+                $entityManager->flush();
+                // Message qui confirme l'action à l'utlisateur
+                $this->addFlash(
+                    'notice',
+                    'Votre licence est modifiée');
+
+                // Redirection vers la page qui liste tous les produits
+                return $this->redirectToRoute('admin_list_licences');
+            }
+
+        }
+        return $this->render('admin/adminlicenceadd.html.twig', [
+            'licenceForm' => $licenceForm->createView()]);
+
+       
     }
 
-    /**
-     * @Route("/admin/licence/save/{id}", name="admin_licence_save")
-     */
-    public function saveLicence($id,
-                                 Request $request,
-                                 LicenceRepository $licenceRepository,
-                                 EntityManagerInterface $entityManager
-    )
-    {
-        //dump($request);
-        //die;
-        $licence = $licenceRepository->find($id);
-
-        $name = $request->request->get('name');
-        $description = $request->request->get('description');
-
-        $dossier = 'img/media/';
-        $nom_fichier = $_FILES['image']['name'];
-        $fichier = $_FILES['image']['tmp_name'];
-        $type = $_FILES['image']['type'];
-        $dossier_image = $dossier . $nom_fichier;
-        move_uploaded_file($fichier, $dossier . $nom_fichier );
-        $src = $nom_fichier;
-
-        $licence->setName($name);
-        $licence->setDescription($description);
-        $licence->setMedia($src);
-
-        $entityManager->persist($licence);
-        $entityManager->flush();
-        $this->addFlash(
-            'notice',
-            'Votre licence est modifiée');
-
-        return $this->redirectToRoute('admin_list_licences');
-    }
-
+    
     /**
      * @Route("/admin/licence/add/", name="admin_licence_add")
      */
-    public function licenceAdd()
+    public function licenceAdd(Request $request, EntityManagerInterface $entityManager)
     {
-        return $this->render('admin/adminlicenceadd.html.twig');
+        $licence = new licence();
+        $licenceForm = $this->createForm(LicenceType::class, $licence);
+
+        $licenceForm->handleRequest($request);
+
+        if ($licenceForm->isSubmitted() && $licenceForm->isValid()) {
+            $imageFile = $licenceForm->get('media')->getData();
+            if ($imageFile) {
+                $dossier = 'img/media/';
+                $nom_fichier = $_FILES['licence']['name']['media'];
+                $fichier = $_FILES['licence']['tmp_name']['media'];
+                $type = $_FILES['licence']['type']['media'];
+                $dossier_image = $dossier . $nom_fichier;
+                move_uploaded_file($fichier, $dossier . $nom_fichier );
+                $licence->setMedia($nom_fichier);
+
+                // Enregistrement des données via $entityManager dans la BDD
+                $entityManager->persist($licence);
+                $entityManager->flush();
+                // Message qui confirme l'action à l'utlisateur
+                $this->addFlash(
+                    'notice',
+                    'Votre licence est ajoutée');
+
+                // Redirection vers la page qui liste tous les produits
+                return $this->redirectToRoute('admin_list_licences');
+            }
+
+        }
+        return $this->render('admin/adminlicenceadd.html.twig', [
+            'licenceForm' => $licenceForm->createView()]);
     }
-
-    /**
-     * @Route("/admin/licence/add/save/", name="admin_licence_add_save")
-     */
-    public function saveAddLicence(
-        Request $request,
-        EntityManagerInterface $entityManager
-    )
-    {
-        //dump($request);
-        //die;
-        $licence= new Licence();
-
-        $name = $request->request->get('name');
-        $description = $request->request->get('description');
-
-        $dossier = 'img/media/';
-        $nom_fichier = $_FILES['image']['name'];
-        $fichier = $_FILES['image']['tmp_name'];
-        $type = $_FILES['image']['type'];
-        $dossier_image = $dossier . $nom_fichier;
-        move_uploaded_file($fichier, $dossier . $nom_fichier );
-        $src = $nom_fichier;
-
-        $licence->setName($name);
-        $licence->setDescription($description);
-        $licence->setMedia($src);
-
-        $entityManager->persist($licence);
-        $entityManager->flush();
-        $this->addFlash(
-            'notice',
-            'Votre licence est ajoutée');
-
-        return $this->redirectToRoute('admin_list_licences');
-    }
+    
 
 }
