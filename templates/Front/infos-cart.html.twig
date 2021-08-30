@@ -6,6 +6,14 @@
 
         <form action="{{ path('info_command') }}" method="post">
             <div class="margin-top">
+                <label for="name">Votre nom</label>
+                <input type="text" id="name" name="name" class="input" {% if app.user %} value="{{ app.user.name}}"{% endif %}>
+            </div>
+            <div class="margin-top">
+                <label for="firstname">Votre prénom</label>
+                <input type="text" id="firstname" name="firstname" class="input" {% if app.user %} value="{{ app.user.firstname}}"{% endif %}>
+            </div>
+            <div class="margin-top">
                 <label for="email">Votre email</label>
                 <input type="text" id="email" name="email" class="input" {% if app.user %} value="{{ app.user.email}}"{% endif %}>
             </div>

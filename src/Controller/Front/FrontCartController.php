@@ -115,44 +115,49 @@ class FrontCartController extends AbstractController
             $user_mail = $user->getUserIdentifier();
             $user_true = $userRepository->findBy(['email' => $user_mail]);
 
-            $email = $request->request->get('email');
-            $adress = $request->request->get('adress');
-            $city = $request->request->get('city');
-            $zipcode = $request->request->get('zipcode');
+            $name = $_POST['name'];
+            $firstname = $_POST['firstname'];
+            $email = $_POST['email'];
+            $adress = $_POST['adress'];
+            $city = $_POST['city'];
+            $zipcode = $_POST['zipcode'];
+            $user_id = $user_true[0]->getId();
 
-            $user_true[0]->setEmail($email);
-            $user_true[0]->setAdress($adress);
-            $user_true[0]->setCity($city);
-            $user_true[0]->setZipcode($zipcode);
 
-            $entityManager->persist($user_true[0]);
-            $entityManager->flush();
+            $connexionBdd = mysqli_connect("localhost", "root", "root");
+            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+            $requete = "UPDATE user SET email = '".$email."', adress = '" .$adress. "', city = '".$city."', zipcode = '".$zipcode."',
+                        name = '".$name."', firstname = '".$firstname."' WHERE  id = '".$user_id."'";
+            $resultat = mysqli_query($connexionBdd, $requete);
+            mysqli_close($connexionBdd);
 
             $commandall = $commandRepository->findAll();
             $commandlist = count($commandall);
-
-            $command = new Command();
-
             $number = $commandlist + 1;
-            $command->setNumberOrder('Commd -' . $number );
-            $command->setDate(new \DateTime("NOW"));
-            $command->setUser($user_true[0]);
-            $command->setPrice($p);
+            $date = date('Y-m-d');
+            $connexionBdd = mysqli_connect("localhost", "root", "root");
+            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+            $requete1 = "INSERT INTO command (user_id, number_order, date, price, zipcode, adress, email, name) VALUES (".$user_id.", '".'Commd-'.$number."', '".$date."', ".$p.", NULL, NULL, NULL, NULL)";
+            $resultat1 = mysqli_query($connexionBdd, $requete1);
+            mysqli_close($connexionBdd);
 
-            $entityManager->persist($command);
-            $entityManager->flush();
 
-            $id = $command->getId();
 
             foreach ( $panier as $prod => $quantity){
+                $connexionBdd = mysqli_connect("localhost", "root", "root");
+                $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+                $requete = "SELECT MAX(Id) FROM command ";
+                $resultat3 = mysqli_query($connexionBdd, $requete);
+                mysqli_close($connexionBdd);
+                $id = mysqli_fetch_assoc($resultat3);
                 $connexionBdd = mysqli_connect("localhost", "root", "root");
                 $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
                 $product = $productRepository->find($prod);
                 $stock_begin = $product->getStock();
                 $stock_end = $stock_begin - $quantity ;
                 $product->setStock($stock_end);
-                $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $command->getId() .")";
-                $resultat = mysqli_query($connexionBdd, $requete);
+                $requete2 = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $id["MAX(Id)"] .")";
+                $resultat2 = mysqli_query($connexionBdd, $requete2);
                 mysqli_close($connexionBdd);
 
 
@@ -164,52 +169,70 @@ class FrontCartController extends AbstractController
 
             }
 
-            return $this->redirectToRoute('card_infos', ['id' => $id]);
+            $connexionBdd = mysqli_connect("localhost", "root", "root");
+            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+            $requete = "SELECT MAX(Id) FROM command ";
+            $resultat3 = mysqli_query($connexionBdd, $requete);
+            $id = mysqli_fetch_assoc($resultat3);
+            return $this->redirectToRoute('card_infos', ['id' => $id["MAX(Id)"]]);
+            mysqli_close($connexionBdd);
         }else{
 
-            $email = $request->request->get('email');
-            $adress = $request->request->get('adress');
-            $city = $request->request->get('city');
-            $zipcode = $request->request->get('zipcode');
+            $name = $_POST['name'];
+            $firstname = $_POST['firstname'];
+            $email = $_POST['email'];
+            $adress = $_POST['adress'];
+            $city = $_POST['city'];
+            $zipcode = $_POST['zipcode'];
+            $date = date('Y-m-d');
 
             $commandall = $commandRepository->findAll();
             $commandlist = count($commandall);
+            $number = $commandlist + 1 ;
 
-            $command = new Command();
             $number = $commandlist + 1;
-            $command->setNumberOrder('Command -' . $number );
-            $command->setDate(new \DateTime("NOW"));
-            $command->setEmail($email);
-            $command->setAdress($adress);
-            $command->setCity($city);
-            $command->setZipcode($zipcode);
-            $command->setPrice($p);
+            $connexionBdd = mysqli_connect("localhost", "root", "root");
+            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+            $requete1 = "INSERT INTO command (user_id, number_order, date, price, zipcode, adress, email, name, city) VALUES 
+            (NULL, '".'Commd-'.$number."', '".$date."', ".$p.", '".$zipcode."', '".$adress."', '".$email."', '".$name. " " .$firstname."', '".$city."')";
+            $resultat1 = mysqli_query($connexionBdd, $requete1);
+            mysqli_close($connexionBdd);
 
-            $entityManager->persist($command);
-            $entityManager->flush();
 
-            $id = $command->getId();
 
             foreach ( $panier as $prod => $quantity){
+                $connexionBdd = mysqli_connect("localhost", "root", "root");
+                $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+                $requete = "SELECT MAX(Id) FROM command ";
+                $resultat3 = mysqli_query($connexionBdd, $requete);
+                mysqli_close($connexionBdd);
+                $id = mysqli_fetch_assoc($resultat3);
                 $connexionBdd = mysqli_connect("localhost", "root", "root");
                 $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
                 $product = $productRepository->find($prod);
                 $stock_begin = $product->getStock();
                 $stock_end = $stock_begin - $quantity ;
                 $product->setStock($stock_end);
-                $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $command->getId() .")";
-                $resultat = mysqli_query($connexionBdd, $requete);
+                $requete2 = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $id["MAX(Id)"] .")";
+                $resultat2 = mysqli_query($connexionBdd, $requete2);
                 mysqli_close($connexionBdd);
+
 
                 unset($panier[$prod]);
                 $session->set('panier', $panier);
 
-                $entityManager->persist($command);
+                $entityManager->persist($product);
                 $entityManager->flush();
 
 
             }
-            return $this->redirectToRoute('card_infos', ['id' => $id]);
+            $connexionBdd = mysqli_connect("localhost", "root", "root");
+            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+            $requete = "SELECT MAX(Id) FROM command ";
+            $resultat3 = mysqli_query($connexionBdd, $requete);
+            $id = mysqli_fetch_assoc($resultat3);
+            return $this->redirectToRoute('card_infos', ['id' => $id["MAX(Id)"]]);
+            mysqli_close($connexionBdd);
         }
 
     }
@@ -242,10 +265,10 @@ class FrontCartController extends AbstractController
             $entityManager->flush();
             $command = $commandRepository->findAll();
             $count = count($command);
-            $command_one = $commandRepository->find($count);
+            $command_one = $commandRepository->find($count + 1);
             $message = (new \Swift_Message('Nouveau contact'))
                 // On attribue l'expéditeur
-                ->setFrom('superamazon@smail.ciom')
+                ->setFrom('superediscount@smail.com')
 
                 // On attribue le destinataire
                 ->setTo($user_true[0]->getEmail())
@@ -262,13 +285,13 @@ class FrontCartController extends AbstractController
         }else{
             $command = $commandRepository->findAll();
             $count = count($command);
-            $command_one = $commandRepository->find($count);
+            $command_one = $commandRepository->find($count + 1 );
 
             $mail = $command_one->getEmail();
 
             $message = (new \Swift_Message('Nouveau contact'))
                 // On attribue l'expéditeur
-                ->setFrom('superamazon@smail.ciom')
+                ->setFrom('superediscount@smail.com')
 
                 // On attribue le destinataire
                 ->setTo($mail)
