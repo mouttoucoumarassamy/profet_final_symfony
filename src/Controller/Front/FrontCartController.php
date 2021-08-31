@@ -4,6 +4,7 @@
 namespace App\Controller\Front;
 
 
+use App\Entity\Command;
 use App\Repository\CommandRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
@@ -119,36 +120,26 @@ class FrontCartController extends AbstractController
             // On cherche dans la base de donnée à quel user il correspond
             $user_true = $userRepository->findBy(['email' => $user_mail]);
 
-            //On récupère les données entrées dans le formulaire
-            $name = $_POST['name'];
-            $firstname = $_POST['firstname'];
-            $email = $_POST['email'];
-            $adress = $_POST['adress'];
-            $city = $_POST['city'];
-            $zipcode = $_POST['zipcode'];
-            $user_id = $user_true[0]->getId();
-
-            //Méthode sans requete SQL sous forme de chaîne de caractères PHP
-            // $user_email = $user_true[0]->setEmail($email);
-            // $user_name = $user_true[0]->setName($name);
-            // $user_firstname = $user_true[0]->setFirstname($firstname);
-            // $user_adress = $user_true[0]->setAdress($adress);
-            // $user_city = $user_true[0]->setCity($city);
-            // $user_zipcode = $user_true[0]->setZipcode($zipcode);
 
 
-            // On réalise une requete SQL avec PHP : pour mettre à jour les infos passées par l'utilisateur par le user
-            // On commence par se connecter au serveur MySQL
-            $connexionBdd = mysqli_connect("localhost", "root", "root");
-            // On sélectionne la base de données
-            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
-            // On écrit la requête SQL sous la forme d'une chaîne de caractères PHP
-            $requete = "UPDATE user SET email = '".$email."', adress = '" .$adress. "', city = '".$city."', zipcode = '".$zipcode."',
-                        name = '".$name."', firstname = '".$firstname."' WHERE  id = '".$user_id."'";
-            // On envoie la requête de puis le script actuel vers la base de données, et récupération du résultat de la requête
-            $resultat = mysqli_query($connexionBdd, $requete);
-            // On ferme la connexion au serveur MySQL
-            mysqli_close($connexionBdd);
+             // On récupère les données du formulaire
+            $name = $request->request->get('name');
+            $firstname = $request->request->get('firstname');
+            $email = $request->request->get('email');
+            $adress = $request->request->get('adress');
+            $city = $request->request->get('city');
+            $zipcode = $request->request->get('zipcode');
+
+            //On attribue au user les données
+            $user_true[0]->setEmail($email);$user_true[0]->setName($name);
+            $user_true[0]->setFirstname($firstname);
+            $user_true[0]->setAdress($adress);$user_true[0]->setCity($city);
+            $user_true[0]->setZipcode($zipcode);
+
+            // On enregistre dans la base de données
+            $entityManager->persist($user_true[0]);
+            $entityManager->flush();
+
 
             // On récupère toutes les commandes dans un tableau
             $commandall = $commandRepository->findAll();
@@ -156,113 +147,93 @@ class FrontCartController extends AbstractController
             $commandlist = count($commandall);
             // On ajoute + 1 car une commande a été supprimée $number va servir pour number_order de la commande
             $number = $commandlist + 1;
-            $date = date('Y-m-d');
-            // requête SQL pour enregistrer la nouvelle commande
-            $connexionBdd = mysqli_connect("localhost", "root", "root");
-            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
-            $requete1 = "INSERT INTO command (user_id, number_order, date, price, zipcode, adress, email, name) VALUES (".$user_id.", '".'Commd-'.$number."', '".$date."', ".$p.", NULL, NULL, NULL, NULL)";
-            $resultat1 = mysqli_query($connexionBdd, $requete1);
-            mysqli_close($connexionBdd);
+            $date = new \DateTime("NOW") ;
 
+            //On attribue les données à une nouvelle commande
 
-            //Méthode sans requete SQL sous forme de chaîne de caractères PHP
+            $command = new Command();
+            $command->setUser($user_true[0]);
+            $command->setNumberOrder('Commd-'.$number);
+            $command->setDate($date);
+            $command->setPrice($p);
 
-            // $command = new Command();
-            // $command_user = $command->setUser($user_true[0]);
-            // $command_order = $command->setNumberOrder('Commd-'.$number);
-            // $command_date = $command->setDate($date);
-            // $command_price = $command->setPrice($p);
+            // On enregistre dans la base de données
+            $entityManager->persist($command);
+            $entityManager->flush();
 
             // Pour enregistrer les informations dans la table product_command
             foreach ( $panier as $prod => $quantity){
-                $connexionBdd = mysqli_connect("localhost", "root", "root");
-                $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
-                // On récupère l'id de la dernière command
-                $requete = "SELECT MAX(Id) FROM command ";
-                $resultat3 = mysqli_query($connexionBdd, $requete);
-                mysqli_close($connexionBdd);
-                $id = mysqli_fetch_assoc($resultat3);
+                $id = $command->getId();
                 $connexionBdd = mysqli_connect("localhost", "root", "root");
                 $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
                 $product = $productRepository->find($prod);
                 $stock_begin = $product->getStock();
                 $stock_end = $stock_begin - $quantity ;
                 $product->setStock($stock_end);
-                $requete2 = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $id["MAX(Id)"] .")";
-                $resultat2 = mysqli_query($connexionBdd, $requete2);
+                $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $id .")";
+                $resultat = mysqli_query($connexionBdd, $requete);
                 mysqli_close($connexionBdd);
 
                 // On vide le panier
                 unset($panier[$prod]);
                 $session->set('panier', $panier);
 
+                // On enregistre dans la base de données les changements du produit
                 $entityManager->persist($product);
                 $entityManager->flush();
 
             }
 
-            $connexionBdd = mysqli_connect("localhost", "root", "root");
-            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
-            // On récupère l'id de la dernière command
-            $requete = "SELECT MAX(Id) FROM command ";
-            $resultat3 = mysqli_query($connexionBdd, $requete);
-            $id = mysqli_fetch_assoc($resultat3);
-            return $this->redirectToRoute('card_infos', ['id' => $id["MAX(Id)"]]);
-            mysqli_close($connexionBdd);
+            return $this->redirectToRoute('card_infos', ['id' => $command->getId()]);
         }else{
             // Si aucun user n'est connecté
-            // les informations sont enregistrées dans la table command
-            $name = $_POST['name'];
-            $firstname = $_POST['firstname'];
-            $email = $_POST['email'];
-            $adress = $_POST['adress'];
-            $city = $_POST['city'];
-            $zipcode = $_POST['zipcode'];
-            $date = date('Y-m-d');
+            // les informations sont enregistrées dans la table comman
 
-            //
+            // Récupération des données du formualire
+            $name = $request->request->get('name');
+            $firstname = $request->request->get('firstname');
+            $email = $request->request->get('email');
+            $adress = $request->request->get('adress');
+            $city = $request->request->get('city');
+            $zipcode = $request->request->get('zipcode');
+
+            // On récupère toutes les commandes et on compte le nombre total de commandes
             $commandall = $commandRepository->findAll();
             $commandlist = count($commandall);
             $number = $commandlist + 1 ;
+            $date = new \DateTime("NOW") ;
 
-            $connexionBdd = mysqli_connect("localhost", "root", "root");
-            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
-            $requete1 = "INSERT INTO command (user_id, number_order, date, price, zipcode, adress, email, name, city) VALUES 
-            (NULL, '".'Commd-'.$number."', '".$date."', ".$p.", '".$zipcode."', '".$adress."', '".$email."', '".$name. " " .$firstname."', '".$city."')";
-            $resultat1 = mysqli_query($connexionBdd, $requete1);
-            mysqli_close($connexionBdd);
 
-            //Méthode sans requete SQL sous forme de chaîne de caractères PHP
+            //On attribue les données à une nouvelle commande
 
-            // $command = new Command();
-            // $command_user = $command->setUser($user_true[0]);
-            // $command_order = $command->setNumberOrder('Commd-'.$number);
-            // $command_date = $command->setDate($date);
-            // $command_price = $command->setPrice($p);
-            // $command_name = $command->setName($name . " " . $firstname);
-            // $command_email = $command->setEmail($email);
-            // $command_adress = $command->setAdress($adress);
-            // $command_city = $command->setCity($city);
-            // $command_zipcode = $command->setZipcode($zipcode);
+            $command = new Command();
+            $command->setNumberOrder('Commd-'.$number);
+            $command->setDate($date);
+            $command->setPrice($p);
+            $command->setName($name . " " . $firstname);
+            $command->setEmail($email);
+            $command->setAdress($adress);
+            $command->setCity($city);
+            $command->setZipcode($zipcode);
 
 
 
 
             foreach ( $panier as $prod => $quantity){
+                $id = $command->getId();
+                // On réalise une requête SQL avec une chaîne de caractères PHP
+                // On se connecte au serveur MySQL
                 $connexionBdd = mysqli_connect("localhost", "root", "root");
-                $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
-                $requete = "SELECT MAX(Id) FROM command ";
-                $resultat3 = mysqli_query($connexionBdd, $requete);
-                mysqli_close($connexionBdd);
-                $id = mysqli_fetch_assoc($resultat3);
-                $connexionBdd = mysqli_connect("localhost", "root", "root");
+                // ON sélectionne la base de données
                 $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
                 $product = $productRepository->find($prod);
                 $stock_begin = $product->getStock();
                 $stock_end = $stock_begin - $quantity ;
                 $product->setStock($stock_end);
-                $requete2 = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $id["MAX(Id)"] .")";
-                $resultat2 = mysqli_query($connexionBdd, $requete2);
+                // On écrit la reqête SQL sous forme de chaîne de caractères PHP
+                $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $id .")";
+                // On envoie de la requête depuis le script actuel vers la base de données et on récupère le résultat de la requête
+                $resultat = mysqli_query($connexionBdd, $requete);
                 mysqli_close($connexionBdd);
 
                 // On vide le panier
@@ -275,13 +246,7 @@ class FrontCartController extends AbstractController
 
             }
 
-            $connexionBdd = mysqli_connect("localhost", "root", "root");
-            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
-            $requete = "SELECT MAX(Id) FROM command ";
-            $resultat3 = mysqli_query($connexionBdd, $requete);
-            $id = mysqli_fetch_assoc($resultat3);
-            return $this->redirectToRoute('card_infos', ['id' => $id["MAX(Id)"]]);
-            mysqli_close($connexionBdd);
+            return $this->redirectToRoute('card_infos', ['id' => $command->getId()]);
         }
 
     }
@@ -318,7 +283,7 @@ class FrontCartController extends AbstractController
             $count = count($command);
             $command_one = $commandRepository->find($count + 1);
             // Envoi du message
-            $message = (new \Swift_Message('Nouveau contact'))
+            $message = (new \Swift_Message('Nouvelle commande'))
                 // On attribue l'expéditeur
                 ->setFrom('superediscount@smail.com')
 
@@ -362,7 +327,6 @@ class FrontCartController extends AbstractController
             $mailer->send($message);
         }
         return $this->redirectToRoute('front_home');
-
     }
 
 }
