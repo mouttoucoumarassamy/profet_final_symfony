@@ -182,9 +182,11 @@ class FrontCartController extends AbstractController
             $zipcode = $request->request->get('zipcode');
 
             //On attribue au user les données
-            $user_true[0]->setEmail($email);$user_true[0]->setName($name);
+            $user_true[0]->setEmail($email);
+            $user_true[0]->setName($name);
             $user_true[0]->setFirstname($firstname);
-            $user_true[0]->setAdress($adress);$user_true[0]->setCity($city);
+            $user_true[0]->setAdress($adress);
+            $user_true[0]->setCity($city);
             $user_true[0]->setZipcode($zipcode);
 
             // On enregistre dans la base de données
