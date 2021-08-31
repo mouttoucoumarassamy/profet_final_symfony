@@ -103,6 +103,7 @@ class FrontCartController extends AbstractController
         // On récupère le panier qui est enregistré dans la session
         $panier = $session->get('panier', []);
         $p = 0;
+
         // Pour chaque produit on cherche son prix et on multiplie par la quantité et on l'ajoute
         // à la variable p pour avoir le prix total du panier
         foreach ( $panier as $prod => $quantity){
@@ -111,8 +112,58 @@ class FrontCartController extends AbstractController
             $p = $p + $price_product*$quantity;
         }
 
+
         // On récupère le user connecté
         $user = $this->getUser();
+
+        // On récupère toutes les commandes dans un tableau
+        $commandall = $commandRepository->findAll();
+        // On compte toutes les commandes
+        $commandlist = count($commandall);
+        // On ajoute + 1 car une commande a été supprimée $number va servir pour number_order de la commande
+        $number = $commandlist + 1;
+        $date = new \DateTime("NOW") ;
+
+        //On attribue les données à une nouvelle commande
+        $command = new Command();
+        $command->setNumberOrder('Commd-'.$number);
+        $command->setDate($date);
+        $command->setPrice($p);
+
+        // On enregistre dans la base de données
+        $entityManager->persist($command);
+        $entityManager->flush();
+
+        $id = $command->getId();
+
+        // Pour enregistrer les informations dans la table product_command
+        foreach ( $panier as $prod => $quantity) {
+            // On réalise une requête SQL avec une chaîne de caractères PHP
+            // On se connecte au serveur MySQL
+            $connexionBdd = mysqli_connect("localhost", "root", "root");
+            // ON sélectionne la base de données
+            $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+            // On change le stocke du produit
+            $product = $productRepository->find($prod);
+            $stock_begin = $product->getStock();
+            $stock_end = $stock_begin - $quantity;
+            $product->setStock($stock_end);
+            // On écrit la requête SQL sous forme de chaîne de caractères PHP
+            $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (" . $quantity . ", " . $product->getId() . ", " . $id . ")";
+            // On envoie de la requête depuis le script actuel vers la base de données et on récupère le résultat de la requête
+            $resultat = mysqli_query($connexionBdd, $requete);
+            // On ferme la connexion au serveur MySQL
+            mysqli_close($connexionBdd);
+
+            // On vide le panier
+            unset($panier[$prod]);
+            $session->set('panier', $panier);
+
+            // On enregistre dans la base de données les changements du produit
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+        }
 
         if ($user){
             // Si un user est connecté on l'identifie en récupérant son adresse mail
@@ -140,54 +191,16 @@ class FrontCartController extends AbstractController
             $entityManager->persist($user_true[0]);
             $entityManager->flush();
 
-
-            // On récupère toutes les commandes dans un tableau
-            $commandall = $commandRepository->findAll();
-            // On compte toutes les commandes
-            $commandlist = count($commandall);
-            // On ajoute + 1 car une commande a été supprimée $number va servir pour number_order de la commande
-            $number = $commandlist + 1;
-            $date = new \DateTime("NOW") ;
-
-            //On attribue les données à une nouvelle commande
-
-            $command = new Command();
+            // on attribue le user à la command
             $command->setUser($user_true[0]);
-            $command->setNumberOrder('Commd-'.$number);
-            $command->setDate($date);
-            $command->setPrice($p);
 
             // On enregistre dans la base de données
             $entityManager->persist($command);
             $entityManager->flush();
 
-            // Pour enregistrer les informations dans la table product_command
-            foreach ( $panier as $prod => $quantity){
-                $id = $command->getId();
-                $connexionBdd = mysqli_connect("localhost", "root", "root");
-                $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
-                $product = $productRepository->find($prod);
-                $stock_begin = $product->getStock();
-                $stock_end = $stock_begin - $quantity ;
-                $product->setStock($stock_end);
-                $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $id .")";
-                $resultat = mysqli_query($connexionBdd, $requete);
-                mysqli_close($connexionBdd);
-
-                // On vide le panier
-                unset($panier[$prod]);
-                $session->set('panier', $panier);
-
-                // On enregistre dans la base de données les changements du produit
-                $entityManager->persist($product);
-                $entityManager->flush();
-
-            }
-
-            return $this->redirectToRoute('card_infos', ['id' => $command->getId()]);
         }else{
             // Si aucun user n'est connecté
-            // les informations sont enregistrées dans la table comman
+            // les informations sont enregistrées dans la table command
 
             // Récupération des données du formualire
             $name = $request->request->get('name');
@@ -197,57 +210,22 @@ class FrontCartController extends AbstractController
             $city = $request->request->get('city');
             $zipcode = $request->request->get('zipcode');
 
-            // On récupère toutes les commandes et on compte le nombre total de commandes
-            $commandall = $commandRepository->findAll();
-            $commandlist = count($commandall);
-            $number = $commandlist + 1 ;
-            $date = new \DateTime("NOW") ;
 
 
-            //On attribue les données à une nouvelle commande
-
-            $command = new Command();
-            $command->setNumberOrder('Commd-'.$number);
-            $command->setDate($date);
-            $command->setPrice($p);
+            //On attribue les données à la commande
             $command->setName($name . " " . $firstname);
             $command->setEmail($email);
             $command->setAdress($adress);
             $command->setCity($city);
             $command->setZipcode($zipcode);
 
+            // On enregistre dans la base de données
+            $entityManager->persist($command);
+            $entityManager->flush();
 
-
-
-            foreach ( $panier as $prod => $quantity){
-                $id = $command->getId();
-                // On réalise une requête SQL avec une chaîne de caractères PHP
-                // On se connecte au serveur MySQL
-                $connexionBdd = mysqli_connect("localhost", "root", "root");
-                // ON sélectionne la base de données
-                $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
-                $product = $productRepository->find($prod);
-                $stock_begin = $product->getStock();
-                $stock_end = $stock_begin - $quantity ;
-                $product->setStock($stock_end);
-                // On écrit la reqête SQL sous forme de chaîne de caractères PHP
-                $requete = "INSERT INTO product_command (product_amount, product_id, command_id) VALUES (". $quantity .", ". $product->getId().", ". $id .")";
-                // On envoie de la requête depuis le script actuel vers la base de données et on récupère le résultat de la requête
-                $resultat = mysqli_query($connexionBdd, $requete);
-                mysqli_close($connexionBdd);
-
-                // On vide le panier
-                unset($panier[$prod]);
-                $session->set('panier', $panier);
-
-                $entityManager->persist($product);
-                $entityManager->flush();
-
-
-            }
-
-            return $this->redirectToRoute('card_infos', ['id' => $command->getId()]);
         }
+
+        return $this->redirectToRoute('card_infos', ['id' => $id]);
 
     }
 
