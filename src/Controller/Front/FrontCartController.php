@@ -128,6 +128,14 @@ class FrontCartController extends AbstractController
             $zipcode = $_POST['zipcode'];
             $user_id = $user_true[0]->getId();
 
+            //Méthode sans requete SQL sous forme de chaîne de caractères PHP
+            // $user_email = $user_true[0]->setEmail($email);
+            // $user_name = $user_true[0]->setName($name);
+            // $user_firstname = $user_true[0]->setFirstname($firstname);
+            // $user_adress = $user_true[0]->setAdress($adress);
+            // $user_city = $user_true[0]->setCity($city);
+            // $user_zipcode = $user_true[0]->setZipcode($zipcode);
+
 
             // On réalise une requete SQL avec PHP : pour mettre à jour les infos passées par l'utilisateur par le user
             // On commence par se connecter au serveur MySQL
@@ -156,6 +164,14 @@ class FrontCartController extends AbstractController
             $resultat1 = mysqli_query($connexionBdd, $requete1);
             mysqli_close($connexionBdd);
 
+
+            //Méthode sans requete SQL sous forme de chaîne de caractères PHP
+
+            // $command = new Command();
+            // $command_user = $command->setUser($user_true[0]);
+            // $command_order = $command->setNumberOrder('Commd-'.$number);
+            // $command_date = $command->setDate($date);
+            // $command_price = $command->setPrice($p);
 
             // Pour enregistrer les informations dans la table product_command
             foreach ( $panier as $prod => $quantity){
@@ -187,6 +203,7 @@ class FrontCartController extends AbstractController
 
             $connexionBdd = mysqli_connect("localhost", "root", "root");
             $selectionBdd = mysqli_select_db($connexionBdd, "project_final_piscine");
+            // On récupère l'id de la dernière command
             $requete = "SELECT MAX(Id) FROM command ";
             $resultat3 = mysqli_query($connexionBdd, $requete);
             $id = mysqli_fetch_assoc($resultat3);
@@ -214,6 +231,20 @@ class FrontCartController extends AbstractController
             (NULL, '".'Commd-'.$number."', '".$date."', ".$p.", '".$zipcode."', '".$adress."', '".$email."', '".$name. " " .$firstname."', '".$city."')";
             $resultat1 = mysqli_query($connexionBdd, $requete1);
             mysqli_close($connexionBdd);
+
+            //Méthode sans requete SQL sous forme de chaîne de caractères PHP
+
+            // $command = new Command();
+            // $command_user = $command->setUser($user_true[0]);
+            // $command_order = $command->setNumberOrder('Commd-'.$number);
+            // $command_date = $command->setDate($date);
+            // $command_price = $command->setPrice($p);
+            // $command_name = $command->setName($name . " " . $firstname);
+            // $command_email = $command->setEmail($email);
+            // $command_adress = $command->setAdress($adress);
+            // $command_city = $command->setCity($city);
+            // $command_zipcode = $command->setZipcode($zipcode);
+
 
 
 
