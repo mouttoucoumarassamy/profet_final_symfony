@@ -74,7 +74,7 @@ class FrontCartController extends AbstractController
     /**
      * @Route("/cart/infos/", name="info_cart")
      */
-    public function infosCart(UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager)
+    public function infosCart(UserRepository $userRepository)
     {
 
         $user = $this->getUser();
