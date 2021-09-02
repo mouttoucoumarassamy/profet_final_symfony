@@ -1,13 +1,13 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block metaTitle %}
-    Ajout de produits
+    Ajout ou modification de produits
 {% endblock metaTitle %}
 
 {% block main %}
     <div class="container-fluid1">
         <div class="row1 licence w95">
-            <h1>Vous pouvez rajouter un produit</h1>
+            <h1>Vous pouvez rajouter ou modifier un produit</h1>
 
             {{ form_start(productForm) }}
                 {{ form_label(productForm.name, 'Nom du produit :', {'label_attr' : {'class'  : 'input-product under'}}) }}
@@ -27,7 +27,7 @@
 
             {{ form_end(productForm) }}
         </div>
-    </div>
+
     <style>
         label img{
             width : 100px;
