@@ -9,46 +9,6 @@
         <div class="row1 licence w95">
             <h1>Vous pouvez rajouter un produit</h1>
 
-           {#
-
-
-           <form action="{{ path('admin_product_save_add') }}" method="post" class="form">
-                <input type="text" name="name" class="input-product" placeholder="Entrer le nom du produit">
-                <input type="text" name="price" class="input-product" placeholder="Entrer le prix du produit" >
-                <input type="text" name="stock" class="input-product" placeholder="Entrer le nombre d'exemplaires du produit">
-                <select name="id_licence" id="" class="input-product">
-                    <option value="">Choissisez une licence</option>
-                    {% for licence in licences %}
-                        <option value="{{ licence.id}}">
-                            {{ licence.name }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <select name="id_category" id="" class="input-product">
-                    <option value="">Choissisez une catégorie</option>
-                    {% for category in categories %}
-                        <option value="{{ category.id}}">
-                            {{ category.name }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <label class="label-radio">Choissisez une ou des images</label>
-                    {% set i = 0 %}
-                    {% for media in medias %}
-                        {% set i = i + 1 %}
-                        <div class="radio">
-                            <input type="radio" name="{{'img' ~ i }}" value="{{ media.src }}"><label for="{{ 'img' ~ i }}"><img
-                                        src="{{asset('img/media/' ~ media.src)  }}" alt="{{ media.alt }}" class="img-product-add"></label>
-                        </div>
-
-                    {% endfor %}
-                </select>
-
-                <input type="submit" value="Ajouter" class="button-product">
-            </form>
-
-           #}
-
             {{ form_start(productForm) }}
                 {{ form_label(productForm.name, 'Nom du produit :', {'label_attr' : {'class'  : 'input-product under'}}) }}
                 {{ form_widget(productForm.name, {'attr' : {'class'  : 'input-product', 'placeholder' : 'Entrer le nom du produit'}}) }}

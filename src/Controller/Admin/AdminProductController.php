@@ -51,17 +51,17 @@ class AdminProductController extends AbstractController
                                   EntityManagerInterface $entityManager,
                                   MediaRepository $mediaRepository)
     {
-        // On récupèr ele produit via son id
+        // On récupère le produit via son id
         $product = $productRepository->find($id);
-
         // On crée le formulaire
         $productForm = $this->createForm(ProductType::class, $product);
+
         $productForm->handleRequest($request);
 
         if($productForm->isSubmitted() && $productForm->isValid()){
-            //On récupère toutes les images qui ont le plus à modifier comme produit associé
+            //On récupère toutes les images qui ont le produit à modifier comme produit associé
            $medias =  $mediaRepository->findBy(['product' => $product]);
-           // A chaque image on on enlève le produit associé
+           // A chaque image on enlève le produit associé
            foreach ($medias as $media){
                $media->setProduct(null);
            }
@@ -79,7 +79,7 @@ class AdminProductController extends AbstractController
                 'notice',
                 'Votre produit est modifié');
 
-            // Redirection vers la page qui liste tous les produit
+            // Redirection vers la page qui liste tous les produits
             return $this->redirectToRoute('admin_list_product');
         }
         return $this->render('admin/productadd.html.twig', [
@@ -94,6 +94,7 @@ class AdminProductController extends AbstractController
     {
         // Instance d'un nouveau produit
         $product = new Product();
+        // Création du formulaire
         $productForm = $this->createForm(ProductType::class, $product);
 
         $productForm->handleRequest($request);

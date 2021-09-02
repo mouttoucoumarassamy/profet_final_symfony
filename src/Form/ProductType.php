@@ -31,7 +31,7 @@ class ProductType extends AbstractType
             ->add('media', EntityType::class, [
                 'class' => Media::class,
                 'choice_label' => 'src',
-                'multiple' => false,
+                'multiple' => true,
                 'expanded' => true,
             ])
             ->add('submit', SubmitType::class)
