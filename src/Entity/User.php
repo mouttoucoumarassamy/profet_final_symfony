@@ -137,10 +137,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Media::class)
-     */
-    private $Media;
 
     /**
      * @ORM\OneToMany(targetEntity=Note::class, mappedBy="user")
@@ -219,19 +215,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
-
-    public function getMedia(): ?Media
-    {
-        return $this->Media;
-    }
-
-    public function setMedia(?Media $Media): self
-    {
-        $this->Media = $Media;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Note[]

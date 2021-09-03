@@ -35,7 +35,7 @@ class FrontProductController extends AbstractController
      */
     public function showProduct(ProductRepository $productRepository, $id, Request $request, EntityManagerInterface  $entityManager, UserRepository $userRepository)
     {
-        // On récupèr ele produit via son id
+        // On récupère le produit via son id
         $product = $productRepository->find($id);
 
 

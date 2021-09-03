@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas SAMPAIO">
+    <meta name="description" content="Site de e-commerce sur le super-héros">
+    <meta name="keywords" content="super-héros, superman, batman, jouets, jeux vidéos, statuette">
     <link rel="stylesheet" href="{{ asset('style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,9 +42,6 @@
             <div class="log">
                 <a href="{{ path('app_login') }}">{% if app.user %}
                         {{ app.user.firstname }} {{ app.user.name  }}
-                        {% if app.user.media %}
-                            <img src="{{ asset('img/media/' ~ app.user.media.src) }}" class="w10">
-                        {% endif %}
                     {% endif %}
                     {% if app.user is null %}
                         Se connecter/S'inscrire

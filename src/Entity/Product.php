@@ -262,27 +262,26 @@ class Product
         return $this;
     }
 
-   ///**
-     //* @return Collection|Command[]
-     //*/
-    //public function getProductAmount(): Collection
-    //{
-       // return $this->product_amount;
-    //}
+   /**
+     * @return Collection|Command[]
+     */
+    public function getProductAmount(): Collection
+    {
+        return $this->product_amount;
+    }
 
-    //public function addProductAmount(Command $productAmount): self
-    //{
-    //    if (!$this->product_amount->contains($productAmount)) {
-        //    $this->product_amount[] = $productAmount;
-        //}
+    public function addProductAmount(Command $productAmount): self
+    {    if (!$this->product_amount->contains($productAmount)) {
+            $this->product_amount[] = $productAmount;
+        }
 
-        //return $this;
-   // }
+        return $this;
+    }
 
-    //public function removeProductAmount(Command $productAmount): self
-    //{
-        //$this->product_amount->removeElement($productAmount);
+    public function removeProductAmount(Command $productAmount): self
+    {
+        $this->product_amount->removeElement($productAmount);
 
-        //return $this;
-    //}
+        return $this;
+    }
 }
