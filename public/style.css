@@ -661,6 +661,18 @@ footer{
     font-weight: bold;
 }
 
+.admin-access{
+    border: 2px solid blue;
+    border-radius: 5px;
+    width: 30%;
+    margin: 0 35%;
+}
+.admin-access a{
+    text-align: center;
+    text-decoration: none;
+    margin: 0 25%;
+}
+
 .count{
     margin: 0% 20%;
     padding: 0.5% 1%;

@@ -20,6 +20,12 @@
                             <a href="{{ path('app_logout') }}">Déconnectez-vous</a>
                     </div>
 
+            {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                    <div class="admin-access">
+                        <h3>Vous êtes administrateur</h3>
+                        <a href="{{ path('admin_home') }}">Accéder à la partie admin du site</a>
+                    </div>
+            {% endif %}
                     <div class="comments">
                         <h2>Les commentaires que vous avez postés</h2>
                         {% for comment in app.user.comments %}
