@@ -287,7 +287,7 @@ class FrontCartController extends AbstractController
 
             // On fait le même chose si aucun user n'est connecté
             // les infos sont récupérées via l'entité command
-            
+
             //$command = $commandRepository->findAll();
             //$count = count($command);
             //$command_one = $commandRepository->find($count + 1 );
