@@ -96,6 +96,14 @@ footer{
  }
  .social{
      width : 33%;
+     display: flex;
+     justify-content: center;
+ }
+
+ .social img{
+     width : 60%;
+     height: auto;
+     margin: auto auto;
  }
 
  img{
@@ -933,13 +941,17 @@ li{
         position: relative;
     }
 
+    header a{
+        text-align: center;
+    }
+
     .w20{
         width: 20%;
     }
 
     .footer{
-        justify-content: space-around;
-        flex-direction: column;
+        justify-content: space-between;
+        font-size: 0.8em;
     }
 
     .footer :nth-child(1) {
@@ -950,9 +962,15 @@ li{
         width: 100%;
     }
 
+    .social{
+        display: flex;
+        justify-content: center;
+    }
+
     .social ul{
-        flex-direction: column;
+        display: flex;
         align-items: center;
+        justify-content: center;
     }
 
     .social li{
@@ -960,7 +978,7 @@ li{
     }
 
     .social img{
-        width : 60%;
+        width : 80%;
     }
 
     .alea{
