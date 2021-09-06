@@ -241,9 +241,9 @@ class FrontCartController extends AbstractController
     }
 
     /**
-     * @Route("/cart/mail/", name="mail")
+     * @Route("/cart/mail/{id}", name="mail")
      */
-    public function mail(UserRepository $userRepository,
+    public function mail($id, UserRepository $userRepository,
                          Request $request,
                          EntityManagerInterface $entityManager,
                          CommandRepository $commandRepository,
@@ -251,6 +251,7 @@ class FrontCartController extends AbstractController
     {
         // Méthode d'envoi de mail
         $user = $this->getUser();
+        $command = $commandRepository->find($id);
         if ($user){
             // Si un user est connecté on récupère ses informations
             $user_mail = $user->getUserIdentifier();
@@ -259,9 +260,11 @@ class FrontCartController extends AbstractController
             $user_true[0]->setCardNumber($request->request->get('number'));
             $entityManager->persist($user_true[0]);
             $entityManager->flush();
-            $command = $commandRepository->findAll();
-            $count = count($command);
-            $command_one = $commandRepository->find($count + 1);
+
+            //$command = $commandRepository->findAll();
+            //$count = count($command);
+            //$command_one = $commandRepository->find($count + 1);
+
             // Envoi du message
             $message = (new \Swift_Message('Nouvelle commande'))
                 // On attribue l'expéditeur
@@ -273,7 +276,7 @@ class FrontCartController extends AbstractController
                 // On crée le texte avec la vue
                 ->setBody(
                     $this->renderView(
-                        'Front/mail.html.twig', ['command' => $command_one]
+                        'Front/mail.html.twig', ['command' => $command]
                     ),
                     'text/html'
                 );
@@ -281,13 +284,15 @@ class FrontCartController extends AbstractController
             // On envoie le message
             $mailer->send($message);
         }else{
+
             // On fait le même chose si aucun user n'est connecté
             // les infos sont récupérées via l'entité command
-            $command = $commandRepository->findAll();
-            $count = count($command);
-            $command_one = $commandRepository->find($count + 1 );
+            
+            //$command = $commandRepository->findAll();
+            //$count = count($command);
+            //$command_one = $commandRepository->find($count + 1 );
 
-            $mail = $command_one->getEmail();
+            $mail = $command->getEmail();
 
             $message = (new \Swift_Message('Nouveau contact'))
                 // On attribue l'expéditeur
@@ -299,7 +304,7 @@ class FrontCartController extends AbstractController
                 // On crée le texte avec la vue
                 ->setBody(
                     $this->renderView(
-                        'Front/mail.html.twig', ['command' => $command_one]
+                        'Front/mail.html.twig', ['command' => $command]
                     ),
                     'text/html'
                 );

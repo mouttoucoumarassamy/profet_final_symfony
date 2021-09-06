@@ -7,7 +7,7 @@
             <h1>Total</h1>
             <h2>{{ command.price }} €</h2>
         </div>
-        <form action="{{ path('mail') }}" class="form" method="post">
+        <form action="{{ path('mail', {'id' : command.id}) }}" class="form" method="post">
             <label for="name" class="label-media">Nom sur la carte</label>
             <input type="text" placeholder="Roger Le Tavernier" class="input-product" name="name"
                     {% if app.user %} {% if app.user.cardName is not null %}value="{{ app.user.cardName }}" {% endif %}  {% endif %}>
