@@ -8,8 +8,6 @@
     {% endfor %}
     <div class="container">
         {% for command in commands %}
-            {% for card in cards %}
-                {% if card.command_id == command.id %}
                     <div class="comment-card">
                         <p class="comment-p">{{ command.numberOrder }}</p>
                         {% if command.user %}
@@ -21,16 +19,20 @@
                         <p>Le {{ command.date | date('d-m-y') }}</p>
                         <p>Liste des produits :</p>
                         <ul>
+                            {% for card in cards %}
+                             {% if card.command_id == command.id %}
                             {% for product in command.products %}
                                 {% if card.product_id == product.id %}
                                     <li>{{ product.name }} {{ product.price }} € ===> Nombre d'exemplaire(s) : {{ card.product_amount }}</li>
                                 {% endif %}
                             {% endfor %}
+                             {% endif %}
+                            {% endfor%}
                         </ul>
                     </div>
-                {% endif %}
 
-            {% endfor%}
+
+
         {% endfor %}
         <div class="page">
             {{ knp_pagination_render(commands) }}

@@ -1,13 +1,13 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block metaTitle %}
-    Ajout d'image
+    Ajout ou modification d'images
 {% endblock metaTitle %}
 
 {% block main %}
     <div class="container-fluid1">
         <div class="row1 licence w95">
-            <h1>Vous pouvez ajouter une image</h1>
+            <h1>Vous pouvez ajouter ou modifier une image</h1>
 
             {{ form_start(mediaForm) }}
             {{ form_label(mediaForm.title, 'Titre de l\'image :', {'label_attr' : {'class'  : 'input-product under'}}) }}
