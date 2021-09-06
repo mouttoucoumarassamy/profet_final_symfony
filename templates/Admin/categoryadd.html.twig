@@ -1,13 +1,13 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block metaTitle %}
-    Ajout de catégorie
+    Ajout ou modification de catégorie
 {% endblock metaTitle %}
 
 {% block main %}
     <div class="container-fluid1">
         <div class="row1 licence w95">
-            <h1>Vous pouvez ajouter la catégorie</h1>
+            <h1>Vous pouvez ajouter ou modifier une catégorie</h1>
 
             {{ form_start(categoryForm) }}
                 {{ form_label(categoryForm.name, 'Nom de la catégorie :', {'label_attr' : {'class'  : 'input-product under'}}) }}

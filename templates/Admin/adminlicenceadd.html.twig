@@ -1,13 +1,13 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block metaTitle %}
-    Ajout de licence
+    Ajout ou modification de licence
 {% endblock metaTitle %}
 
 {% block main %}
     <div class="container-fluid1">
         <div class="row1 licence w95">
-            <h1>Vous pouvez ajouter la licence</h1>
+            <h1>Vous pouvez ajouter ou modifier une licence licence</h1>
 
             {{ form_start(licenceForm) }}
             {{ form_label(licenceForm.name, 'Nom de la licence :', {'label_attr' : {'class'  : 'input-product under'}}) }}
