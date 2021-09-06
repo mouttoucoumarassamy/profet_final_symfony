@@ -964,6 +964,10 @@ li{
         order: 3;
     }
 
+    .footer :nth-child(2) {
+        order: 2;
+    }
+
     .footer div{
         width: 100%;
     }
